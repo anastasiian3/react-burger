@@ -1,0 +1,12 @@
+.ingredients {
+  max-width: 600px;
+}
+
+.heading {
+  text-align: start;
+}
+
+.container {
+  max-height: 68vh;
+  overflow: auto;
+}

@@ -1,0 +1,6 @@
+.button {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  gap: 8px;
+}
