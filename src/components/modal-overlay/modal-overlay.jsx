@@ -1,8 +1,13 @@
 import React from 'react';
-//import styles from './total-price.module.css';
+import styles from './modal-overlay.module.css';
 
-const ModayOverlay = () => {
-  return <div></div>;
+const ModalOverlay = ({ onClick }) => {
+  return (
+    <div
+      className={styles.overlay}
+      onClick={onClick}
+    ></div>
+  );
 };
 
-export default ModayOverlay;
+export default ModalOverlay;

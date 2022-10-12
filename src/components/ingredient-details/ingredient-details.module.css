@@ -1,0 +1,64 @@
+.popup {
+  position: relative;
+  background-color: #1c1c21;
+  border-radius: 40px;
+  padding-top: 50px;
+}
+
+.close_btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  cursor: pointer;
+  transition: opacity 0.4s ease-in;
+}
+
+.close_btn:hover {
+  opacity: 0.6;
+}
+
+.heading {
+  min-width: 640px;
+  margin-bottom: 10px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  column-gap: 20px;
+  row-gap: 8px;
+  justify-items: center;
+}
+
+.title {
+  margin: 0;
+}
+
+.calories {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.proteins {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.fat {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.carbohydrates {
+  grid-column: 4;
+  grid-row: 2;
+}

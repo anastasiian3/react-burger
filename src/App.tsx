@@ -5,6 +5,8 @@ import { url } from './utils/const';
 import AppHeader from './components/app-header/app-header';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
+import OrderDetails from './components/order-details/order-details';
+import IngredientDetails from './components/ingredient-details/ingredient-details';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);

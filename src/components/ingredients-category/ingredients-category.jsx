@@ -1,8 +1,8 @@
 import React from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import itemsStyles from './ingredients-items.module.css';
+import itemsStyles from './ingredients-category.module.css';
 
-const IngredientsItems = ({ title, id, type, ingredients }) => {
+const IngredientsCategory = ({ title, id, type, ingredients }) => {
   return (
     <section>
       <h3
@@ -20,8 +20,8 @@ const IngredientsItems = ({ title, id, type, ingredients }) => {
                   image={item.image}
                   name={item.name}
                   price={item.price}
-                  count={'1'}
-                  //   count={item.__v}
+                  //count={'1'}
+                  count={item.__v}
                 />
               </li>
             )
@@ -32,4 +32,4 @@ const IngredientsItems = ({ title, id, type, ingredients }) => {
   );
 };
 
-export default IngredientsItems;
+export default IngredientsCategory;

@@ -1,15 +1,15 @@
 import React from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientsItems from '../ingredients-items/ingredients-items';
+import IngredientsCategory from '../ingredients-category/ingredients-category';
 
 const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = React.useState('bun');
+  console.log(ingredients);
 
   const clickOnIngredientType = (id) => {
     setCurrent(id);
     document.querySelector(`#${id}`)?.scrollIntoView({ behavior: 'smooth' });
-    console.log(id);
   };
 
   return (
@@ -42,19 +42,19 @@ const BurgerIngredients = ({ ingredients }) => {
         </Tab>
       </div>
       <div className={styles.container}>
-        <IngredientsItems
+        <IngredientsCategory
           id={'bun'}
           title={'Булки'}
           type={'bun'}
           ingredients={ingredients}
         />
-        <IngredientsItems
+        <IngredientsCategory
           id={'sauce'}
           title={'Соусы'}
           type={'sauce'}
           ingredients={ingredients}
         />
-        <IngredientsItems
+        <IngredientsCategory
           id={'main'}
           title={'Начинки'}
           type={'main'}
