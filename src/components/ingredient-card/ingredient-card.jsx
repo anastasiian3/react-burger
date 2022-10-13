@@ -5,7 +5,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientsPropTypes } from '../../utils/prop-types';
 
-const IngredientCard = ({ data, name, image, price, count, onIngredientClick }) => {
+const IngredientCard = ({ ingredient, count, onIngredientClick }) => {
   return (
     <article className={`${styles.card}`}>
       {count > 0 && (
@@ -17,26 +17,23 @@ const IngredientCard = ({ data, name, image, price, count, onIngredientClick }) 
       )}
       <img
         className={`ml-4 mr-4 ${styles.img}`}
-        src={image}
-        alt={name}
+        src={ingredient.image}
+        alt={ingredient.name}
         onClick={() => {
-          onIngredientClick(data);
+          onIngredientClick(ingredient);
         }}
       />
       <p className={`${styles.price} mt-1 mb-1 text text_type_digits-default`}>
-        {price}
-        {price && <CurrencyIcon type={'primary'} />}
+        {ingredient.price}
+        {ingredient.price && <CurrencyIcon type={'primary'} />}
       </p>
-      <p className={`text text_type_main-default`}>{name}</p>
+      <p className={`text text_type_main-default`}>{ingredient.name}</p>
     </article>
   );
 };
 
 IngredientCard.propTypes = {
-  data: PropTypes.object,
-  name: PropTypes.string,
-  image: PropTypes.string,
-  price: PropTypes.number,
+  ingredient: ingredientsPropTypes.isRequired,
   count: PropTypes.number,
   onIngredientClick: PropTypes.func.isRequired,
 };

@@ -20,10 +20,7 @@ const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }
               <li key={item._id}>
                 <IngredientCard
                   onIngredientClick={onIngredientClick}
-                  data={item}
-                  image={item.image}
-                  name={item.name}
-                  price={item.price}
+                  ingredient={item}
                   count={item.__v}
                 />
               </li>
@@ -36,9 +33,9 @@ const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }
 };
 
 IngredientsCategory.propTypes = {
-  data: PropTypes.string,
-  id: PropTypes.string,
-  type: PropTypes.string,
+  // data: PropTypes.string,
+  // id: PropTypes.string,
+  // type: PropTypes.string,
   ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
   onIngredientClick: PropTypes.func,
 };
