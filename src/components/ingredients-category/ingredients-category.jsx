@@ -1,8 +1,10 @@
 import React from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import itemsStyles from './ingredients-category.module.css';
+import PropTypes from 'prop-types';
+import { ingredientsPropTypes } from '../../utils/prop-types';
 
-const IngredientsCategory = ({ title, id, type, ingredients }) => {
+const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }) => {
   return (
     <section>
       <h3
@@ -17,10 +19,11 @@ const IngredientsCategory = ({ title, id, type, ingredients }) => {
             item.type === type && (
               <li key={item._id}>
                 <IngredientCard
+                  onIngredientClick={onIngredientClick}
+                  data={item}
                   image={item.image}
                   name={item.name}
                   price={item.price}
-                  //count={'1'}
                   count={item.__v}
                 />
               </li>
@@ -30,6 +33,14 @@ const IngredientsCategory = ({ title, id, type, ingredients }) => {
       </ul>
     </section>
   );
+};
+
+IngredientsCategory.propTypes = {
+  data: PropTypes.string,
+  id: PropTypes.string,
+  type: PropTypes.string,
+  ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
+  onIngredientClick: PropTypes.func,
 };
 
 export default IngredientsCategory;

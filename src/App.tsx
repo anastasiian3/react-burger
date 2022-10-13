@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { url } from './utils/const';
+import { getServerData } from './utils/api';
 
 import AppHeader from './components/app-header/app-header';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
-import OrderDetails from './components/order-details/order-details';
-import IngredientDetails from './components/ingredient-details/ingredient-details';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
 
-  const receiveIngredientsData = () => {
-    fetch(url)
-      .then((res) => res.json())
+  useEffect(() => {
+    getServerData()
       .then((json) => setIngredients(json.data))
       .catch((err) => {
         console.log(err);
         alert('Ошибка при получении данных');
       });
-  };
-
-  useEffect(() => {
-    receiveIngredientsData();
   }, []);
 
   return (

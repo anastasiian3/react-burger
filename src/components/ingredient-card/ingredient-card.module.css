@@ -15,6 +15,7 @@
 .img {
   width: 240px;
   height: 120px;
+  cursor: pointer;
 }
 
 .iconWrap svg {

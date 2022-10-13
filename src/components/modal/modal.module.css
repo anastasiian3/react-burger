@@ -22,3 +22,19 @@
   flex-direction: column;
   box-sizing: border-box;
 }
+
+.close_btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  position: absolute;
+  z-index: 2;
+  top: 50px;
+  right: 40px;
+  cursor: pointer;
+  transition: opacity 0.4s ease-in;
+}
+
+.close_btn:hover {
+  opacity: 0.6;
+}

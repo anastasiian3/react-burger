@@ -4,10 +4,13 @@ import { Button, DragIcon, ConstructorElement } from '@ya.praktikum/react-develo
 import TotalPrice from '../total-price/total-price';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import PropTypes from 'prop-types';
+import { ingredientsPropTypes } from '../../utils/prop-types';
 
 const BurgerConstructor = ({ ingredients }) => {
   const cratorBun = ingredients.find((bun) => bun._id === '60d3b41abdacab0026a733c6');
   //const fluorescBun = ingredients.find((bun) => bun._id === '60d3b41abdacab0026a733c7');
+  const totalSum = ingredients.reduce((sum, item) => sum + item.price, 0);
 
   const [isModalOpened, setIsModalOpened] = useState(false);
   //закрытие всех модальных окон
@@ -65,7 +68,7 @@ const BurgerConstructor = ({ ingredients }) => {
         )}
       </div>
       <div className={styles.total}>
-        <TotalPrice total={'9093'} />
+        <TotalPrice total={totalSum} />
         <Button
           onClick={openModal}
           htmlType={'button'}
@@ -86,6 +89,10 @@ const BurgerConstructor = ({ ingredients }) => {
       )}
     </div>
   );
+};
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
 };
 
 export default BurgerConstructor;

@@ -1,21 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import PropTypes from 'prop-types';
+import { ingredientsPropTypes } from '../../utils/prop-types';
 
-const IngredientCard = ({ name, image, price, count }) => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  //закрытие всех модальных окон
-  const closeAllModals = () => {
-    setIsModalOpened(false);
-  };
-  //открытие всех модальных окон
-  const openModal = () => {
-    setIsModalOpened(true);
-  };
-
+const IngredientCard = ({ data, name, image, price, count, onIngredientClick }) => {
   return (
     <article className={`${styles.card}`}>
       {count > 0 && (
@@ -29,24 +19,26 @@ const IngredientCard = ({ name, image, price, count }) => {
         className={`ml-4 mr-4 ${styles.img}`}
         src={image}
         alt={name}
-        onClick={openModal}
+        onClick={() => {
+          onIngredientClick(data);
+        }}
       />
       <p className={`${styles.price} mt-1 mb-1 text text_type_digits-default`}>
         {price}
         {price && <CurrencyIcon type={'primary'} />}
       </p>
       <p className={`text text_type_main-default`}>{name}</p>
-
-      {isModalOpened && (
-        <Modal
-          onOverlayClick={closeAllModals}
-          closeAllModals={closeAllModals}
-        >
-          <IngredientDetails closeModal={closeAllModals} />
-        </Modal>
-      )}
     </article>
   );
+};
+
+IngredientCard.propTypes = {
+  data: PropTypes.object,
+  name: PropTypes.string,
+  image: PropTypes.string,
+  price: PropTypes.number,
+  count: PropTypes.number,
+  onIngredientClick: PropTypes.func.isRequired,
 };
 
 export default IngredientCard;

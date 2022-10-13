@@ -4,7 +4,7 @@
   background-color: #1c1c21;
   border-radius: 40px;
 }
-
+/* 
 .close_btn {
   border: none;
   outline: none;
@@ -18,7 +18,7 @@
 
 .close_btn:hover {
   opacity: 0.6;
-}
+} */
 
 .order {
   min-width: 520px;
