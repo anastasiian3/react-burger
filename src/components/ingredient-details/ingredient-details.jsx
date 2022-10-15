@@ -1,9 +1,7 @@
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
 import { ingredientsPropTypes } from '../../utils/prop-types';
 
 const IngredientDetails = ({ ingredients }) => {
-  console.log(ingredients);
   return (
     <section className={`pr-10 pb-15 pl-10 ${styles.popup}`}>
       <h2 className={`text text_type_main-large ${styles.heading}`}>Детали ингредиента</h2>

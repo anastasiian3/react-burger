@@ -6,6 +6,7 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import PropTypes from 'prop-types';
 import { ingredientsPropTypes } from '../../utils/prop-types';
+import { INGREDIENTS } from '../../utils/const';
 
 const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = useState('bun');
@@ -29,22 +30,22 @@ const BurgerIngredients = ({ ingredients }) => {
         className='pb-10'
       >
         <Tab
-          value='bun'
-          active={current === 'bun'}
+          value={INGREDIENTS.BUN}
+          active={current === INGREDIENTS.BUN}
           onClick={clickOnIngredientType}
         >
           Булки
         </Tab>
         <Tab
-          value='sauce'
-          active={current === 'sauce'}
+          value={INGREDIENTS.SAUCE}
+          active={current === INGREDIENTS.SAUCE}
           onClick={clickOnIngredientType}
         >
           Соусы
         </Tab>
         <Tab
-          value='main'
-          active={current === 'main'}
+          value={INGREDIENTS.MAIN}
+          active={current === INGREDIENTS.MAIN}
           onClick={clickOnIngredientType}
         >
           Начинки
@@ -52,23 +53,23 @@ const BurgerIngredients = ({ ingredients }) => {
       </div>
       <div className={styles.container}>
         <IngredientsCategory
-          id={'bun'}
+          id={INGREDIENTS.BUN}
           title={'Булки'}
-          type={'bun'}
+          type={INGREDIENTS.BUN}
           ingredients={ingredients}
           onIngredientClick={setIngredientsModal}
         />
         <IngredientsCategory
-          id={'sauce'}
+          id={INGREDIENTS.SAUCE}
           title={'Соусы'}
-          type={'sauce'}
+          type={INGREDIENTS.SAUCE}
           ingredients={ingredients}
           onIngredientClick={setIngredientsModal}
         />
         <IngredientsCategory
-          id={'main'}
+          id={INGREDIENTS.MAIN}
           title={'Начинки'}
-          type={'main'}
+          type={INGREDIENTS.MAIN}
           ingredients={ingredients}
           onIngredientClick={setIngredientsModal}
         />

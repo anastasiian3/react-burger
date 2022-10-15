@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
-import { getServerData } from './utils/api';
+import styles from './app.module.css';
+import { getServerData } from '../../utils/api';
 
-import AppHeader from './components/app-header/app-header';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from './components/burger-constructor/burger-constructor';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
@@ -21,7 +21,7 @@ function App() {
   return (
     <div className='App'>
       <AppHeader />
-      <main className='main'>
+      <main className={styles.main}>
         <BurgerIngredients ingredients={ingredients} />
         <BurgerConstructor ingredients={ingredients} />
       </main>
