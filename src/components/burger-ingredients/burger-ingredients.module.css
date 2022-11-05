@@ -1,0 +1,22 @@
+.ingredients {
+  max-width: 600px;
+}
+
+.heading {
+  text-align: start;
+}
+
+.container {
+  max-height: 68vh;
+  overflow: auto;
+}
+
+.container::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+  margin-left: 8px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}

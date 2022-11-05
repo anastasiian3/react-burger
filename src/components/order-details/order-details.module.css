@@ -1,0 +1,25 @@
+.popup {
+  position: relative;
+  text-align: center;
+  background-color: #1c1c21;
+  border-radius: 40px;
+}
+/* 
+.close_btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  cursor: pointer;
+  transition: opacity 0.4s ease-in;
+}
+
+.close_btn:hover {
+  opacity: 0.6;
+} */
+
+.order {
+  min-width: 520px;
+}

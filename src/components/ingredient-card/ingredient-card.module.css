@@ -1,0 +1,24 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  min-height: 208px;
+  align-items: center;
+  position: relative;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.img {
+  width: 240px;
+  height: 120px;
+  cursor: pointer;
+}
+
+.iconWrap svg {
+  width: 24px;
+  height: 24px;
+}
