@@ -1,7 +1,7 @@
 import { URL } from './const';
 
 const checkResponce = (res) => {
-  return res.ok ? res.json() : Promise.reject(`При загрузке данных произошла ошибка: ${res.status}`);
+  return res.ok ? res.json() : Promise.reject(res.errorMessage ?? 'При загрузке данных произошла ошибка');
 };
 
 export const getServerData = () => {
