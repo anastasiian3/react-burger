@@ -5,16 +5,19 @@ import TotalPrice from '../total-price/total-price';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadingSymbol } from '../../utils/const';
-import { DELETE_ITEM, RESET_CONSTRUCTOR_INGREDIENTS } from '../../services/actions/burger-constructor';
+import { INGREDIENTS, loadingSymbol } from '../../utils/const';
+import {
+  ADD_BUN_TO_CART,
+  ADD_INGREDIENT_TO_CART,
+  RESET_CONSTRUCTOR_INGREDIENTS,
+} from '../../services/actions/burger-constructor';
 import { obtainOrderNumber } from '../../services/actions/order-details';
+import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
+import ConstructorCard from '../constructor-card/constructor-card';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-
-  const handleItemDelete = (key) => {
-    dispatch({ type: DELETE_ITEM, key: key });
-  };
 
   const { buns, ingredients } = useSelector((state) => state.constructorReducer);
 
@@ -25,6 +28,20 @@ const BurgerConstructor = () => {
   const bunId = buns?._id;
   const ingredientsId = ingredients.map((ingredient) => ingredient._id);
   const userOrder = [bunId, ...ingredientsId, bunId];
+
+  const [{ isHover }, dropRef] = useDrop({
+    accept: 'ingredients',
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(ingredient) {
+      if (ingredient.type === INGREDIENTS.BUN) {
+        dispatch({ type: ADD_BUN_TO_CART, payload: ingredient });
+      } else {
+        dispatch({ type: ADD_INGREDIENT_TO_CART, payload: { ...ingredient, key: uuidv4() } });
+      }
+    },
+  });
 
   const [isModalOpened, setIsModalOpened] = useState(false);
   //закрытие всех модальных окон
@@ -40,15 +57,18 @@ const BurgerConstructor = () => {
 
   return (
     <div className={`${styles.constructor}`}>
-      <div className={`mt-25 mb-10 ${styles.container}`}>
+      <div
+        className={`mt-25 mb-10 ${styles.container} ${isHover ? styles.container__hover : ''}`}
+        ref={dropRef}
+      >
         {!buns ? (
           <ConstructorElement
             type={'top'}
             isLocked={true}
-            text={'Выберите булку'}
+            text={'Перетащите булку'}
             price={''}
             thumbnail={loadingSymbol}
-            extraClass={`mr-4 `}
+            extraClass={`mr-4`}
           />
         ) : (
           <ConstructorElement
@@ -62,24 +82,29 @@ const BurgerConstructor = () => {
         )}
 
         <ul className={`${styles.list}`}>
-          {ingredients.map((ingredient) => {
+          {ingredients.length === 0 && (
+            <div
+              className={`${isHover ? styles.container__hover : ''}`}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <DragIcon type={'primary'} />
+              <ConstructorElement
+                isLocked={false}
+                text={`Перетащите начинку`}
+                price={''}
+                thumbnail={loadingSymbol}
+                extraClass={`mr-4 ml-1`}
+              />
+            </div>
+          )}
+          {ingredients.map((ingredient, index) => {
             return (
               (ingredient.type === 'main' || ingredient.type === 'sauce') && (
-                <li
-                  key={ingredient.uuid}
-                  className={styles.ingredient}
-                >
-                  <DragIcon type={'primary'} />
-                  <ConstructorElement
-                    isLocked={false}
-                    text={ingredient.name}
-                    thumbnail={ingredient.image}
-                    price={ingredient.price}
-                    handleClose={() => {
-                      handleItemDelete(ingredient.key);
-                    }}
-                  />
-                </li>
+                <ConstructorCard
+                  ingredient={ingredient}
+                  index={index}
+                  key={ingredient.key}
+                />
               )
             );
           })}
@@ -88,7 +113,7 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type={'bottom'}
             isLocked={true}
-            text={`Выберите булку`}
+            text={`Перетащите булку`}
             price={''}
             thumbnail={loadingSymbol}
             extraClass={`mr-4`}

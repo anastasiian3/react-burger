@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
-const IngredientsCategory = forwardRef(({ title, id, type, onIngredientClick }, ref) => {
+const IngredientsCategory = forwardRef(({ title, id, type }, ref) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,7 +31,6 @@ const IngredientsCategory = forwardRef(({ title, id, type, onIngredientClick }, 
             item.type === type && (
               <li key={item._id}>
                 <IngredientCard
-                  //onIngredientClick={onIngredientClick}
                   ingredient={item}
                   count={item.__v}
                 />
@@ -47,7 +46,6 @@ const IngredientsCategory = forwardRef(({ title, id, type, onIngredientClick }, 
 IngredientsCategory.propTypes = {
   id: PropTypes.string,
   type: PropTypes.string,
-  onIngredientClick: PropTypes.func,
 };
 
 export default IngredientsCategory;

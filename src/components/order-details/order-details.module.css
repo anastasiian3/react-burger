@@ -12,3 +12,8 @@
 .order__info {
   max-width: 520px;
 }
+
+.loader {
+  width: 100px;
+  height: 20px;
+}

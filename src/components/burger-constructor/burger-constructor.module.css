@@ -8,6 +8,13 @@
   flex-direction: column;
   gap: 15px;
   align-items: flex-end;
+  border: 1px solid #131316;
+  transition: all 0.3s ease-out;
+}
+
+.container__hover {
+  /* border: 1px dashed #07420eec; */
+  background: radial-gradient(circle, rgba(25, 45, 24, 1) 0%, rgba(19, 19, 22, 1) 90%);
 }
 
 .list {
