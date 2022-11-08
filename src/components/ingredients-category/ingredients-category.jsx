@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import itemsStyles from './ingredients-category.module.css';
 import PropTypes from 'prop-types';
-import { ingredientsPropTypes } from '../../utils/prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 
-const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }) => {
+const IngredientsCategory = forwardRef(({ title, id, type, onIngredientClick }, ref) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  const items = useSelector((state) => state.ingredientsReducer.ingredients);
+
   return (
     <section>
       <h3
@@ -13,13 +22,16 @@ const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }
       >
         {title}
       </h3>
-      <ul className={`${itemsStyles.list}`}>
-        {ingredients.map((item) => {
+      <ul
+        className={`${itemsStyles.list}`}
+        ref={ref}
+      >
+        {items?.map((item) => {
           return (
             item.type === type && (
               <li key={item._id}>
                 <IngredientCard
-                  onIngredientClick={onIngredientClick}
+                  //onIngredientClick={onIngredientClick}
                   ingredient={item}
                   count={item.__v}
                 />
@@ -30,13 +42,11 @@ const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }
       </ul>
     </section>
   );
-};
+});
 
 IngredientsCategory.propTypes = {
-  // data: PropTypes.string,
-  // id: PropTypes.string,
-  // type: PropTypes.string,
-  ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
+  id: PropTypes.string,
+  type: PropTypes.string,
   onIngredientClick: PropTypes.func,
 };
 

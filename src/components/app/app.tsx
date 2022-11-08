@@ -1,31 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './app.module.css';
-import { getServerData } from '../../utils/api';
+import { Provider } from 'react-redux';
+import { store } from '../../services';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
-
-  useEffect(() => {
-    getServerData()
-      .then((json) => setIngredients(json.data))
-      .catch((err) => {
-        console.log(err);
-        alert('Ошибка при получении данных');
-      });
-  }, []);
-
   return (
-    <div className='App'>
-      <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} />
-      </main>
-    </div>
+    <Provider store={store}>
+      <div className='App'>
+        <AppHeader />
+        <DndProvider backend={HTML5Backend}>
+          <main className={styles.main}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </DndProvider>
+      </div>
+    </Provider>
   );
 }
 

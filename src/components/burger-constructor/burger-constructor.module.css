@@ -32,6 +32,10 @@
   background: #8585ad;
 }
 
+.list::-webkit-scrollbar-thumb:hover {
+  background: #6a6a8f;
+}
+
 .ingredient {
   display: flex;
   align-items: center;
