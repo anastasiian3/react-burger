@@ -25,10 +25,6 @@ const BurgerConstructor = () => {
     return ingredients.reduce((total, item) => total + item.price, buns ? buns.price * 2 : 0);
   }, [ingredients, buns]);
 
-  const bunId = buns?._id;
-  const ingredientsId = ingredients.map((ingredient) => ingredient._id);
-  const userOrder = [bunId, ...ingredientsId, bunId];
-
   const [{ isHover }, dropRef] = useDrop({
     accept: 'ingredients',
     collect: (monitor) => ({
@@ -51,6 +47,9 @@ const BurgerConstructor = () => {
   };
   //открытие всех модальных окон
   const openOrderModal = () => {
+    const bunId = buns?._id;
+    const ingredientsId = ingredients.map((ingredient) => ingredient._id);
+    const userOrder = [bunId, ...ingredientsId, bunId];
     dispatch(obtainOrderNumber(userOrder));
     setIsModalOpened(true);
   };
@@ -83,10 +82,7 @@ const BurgerConstructor = () => {
 
         <ul className={`${styles.list}`}>
           {ingredients.length === 0 && (
-            <div
-              className={`${isHover ? styles.container__hover : ''}`}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            >
+            <div className={`${isHover ? styles.container__hover : ''} ${styles.container_type_empty}`}>
               <DragIcon type={'primary'} />
               <ConstructorElement
                 isLocked={false}
@@ -131,26 +127,15 @@ const BurgerConstructor = () => {
       </div>
       <div className={styles.total}>
         <TotalPrice total={totalSum} />
-        {ingredients.length === 0 || !buns ? (
-          <Button
-            onClick={openOrderModal}
-            htmlType={'button'}
-            type='primary'
-            size='large'
-            disabled={true}
-          >
-            Оформить заказ
-          </Button>
-        ) : (
-          <Button
-            onClick={openOrderModal}
-            htmlType={'button'}
-            type='primary'
-            size='large'
-          >
-            Оформить заказ
-          </Button>
-        )}
+        <Button
+          onClick={openOrderModal}
+          htmlType={'button'}
+          type='primary'
+          size='large'
+          disabled={ingredients.length === 0 || !buns ? true : false}
+        >
+          Оформить заказ
+        </Button>
       </div>
 
       {isModalOpened && (

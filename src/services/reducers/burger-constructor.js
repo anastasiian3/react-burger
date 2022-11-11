@@ -27,9 +27,11 @@ export const constructorReducer = (state = initialConstructorState, action) => {
       };
     }
     case DELETE_ITEM: {
+      const updatedIngredients = [...state.ingredients];
+      updatedIngredients.splice(action.payload, 1);
       return {
         ...state,
-        ingredients: [...state.ingredients].filter((ingredient) => ingredient.key !== action.key),
+        ingredients: updatedIngredients,
       };
     }
     case RESET_CONSTRUCTOR_INGREDIENTS: {

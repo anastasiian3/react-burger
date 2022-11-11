@@ -24,7 +24,7 @@ export function obtainOrderNumber(data) {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         dispatch({
           type: ORDER_DETAILS_FAILED,
         });

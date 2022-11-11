@@ -1,17 +1,10 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import itemsStyles from './ingredients-category.module.css';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/burger-ingredients';
+import { useSelector } from 'react-redux';
 
 const IngredientsCategory = forwardRef(({ title, id, type }, ref) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
   const items = useSelector((state) => state.ingredientsReducer.ingredients);
 
   return (
@@ -44,8 +37,9 @@ const IngredientsCategory = forwardRef(({ title, id, type }, ref) => {
 });
 
 IngredientsCategory.propTypes = {
-  id: PropTypes.string,
-  type: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default IngredientsCategory;

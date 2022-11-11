@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { ingredientsPropTypes } from '../../utils/prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { CLOSE_IGREDIENT_MODAL, OPEN_IGREDIENT_MODAL } from '../../services/actions/ingredient-details';
@@ -88,7 +87,6 @@ const IngredientCard = ({ ingredient }) => {
 
 IngredientCard.propTypes = {
   ingredient: ingredientsPropTypes.isRequired,
-  count: PropTypes.number,
 };
 
 export default IngredientCard;

@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { INGREDIENTS } from '../../utils/const';
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState('bun');
+  const [current, setCurrent] = useState(INGREDIENTS.BUN);
 
   const options = {
     threshold: 0,

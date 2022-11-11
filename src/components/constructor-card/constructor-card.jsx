@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
 import styles from './constructor-card.module.css';
+import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { DELETE_ITEM, MOVE_ITEM } from '../../services/actions/burger-constructor';
 import { useDrop, useDrag } from 'react-dnd';
+import { ingredientsPropTypes } from '../../utils/prop-types';
 
 const ConstructorCard = ({ ingredient, index }) => {
   const dispatch = useDispatch();
@@ -16,8 +18,8 @@ const ConstructorCard = ({ ingredient, index }) => {
     });
   };
 
-  const handleItemDelete = (key) => {
-    dispatch({ type: DELETE_ITEM, key: key });
+  const handleItemDelete = () => {
+    dispatch({ type: DELETE_ITEM, payload: index });
   };
 
   const ref = useRef(null);
@@ -47,17 +49,13 @@ const ConstructorCard = ({ ingredient, index }) => {
       }
       const dragIndex = item.index;
       const hoverIndex = index;
-
       if (dragIndex === hoverIndex) {
         return;
       }
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
       const clientOffset = monitor.getClientOffset();
-
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
@@ -69,7 +67,6 @@ const ConstructorCard = ({ ingredient, index }) => {
       }
 
       moveCard(dragIndex, hoverIndex);
-
       item.index = hoverIndex;
     },
   });
@@ -90,13 +87,16 @@ const ConstructorCard = ({ ingredient, index }) => {
         text={ingredient.name}
         thumbnail={ingredient.image}
         price={ingredient.price}
-        handleClose={() => {
-          handleItemDelete(ingredient.key);
-        }}
+        handleClose={handleItemDelete}
         extraClass={`mr-4 ml-1`}
       />
     </li>
   );
+};
+
+ConstructorCard.propTypes = {
+  ingredient: ingredientsPropTypes.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default ConstructorCard;

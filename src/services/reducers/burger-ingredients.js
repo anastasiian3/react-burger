@@ -5,11 +5,6 @@ const ingredientsInitialState = {
 
   ingredientsRequest: false,
   ingredientsError: false,
-
-  ingredient: {},
-  requestDetails: false,
-  showDetails: false,
-  requestDetailsError: false,
 };
 
 export const ingredientsReducer = (state = ingredientsInitialState, action) => {

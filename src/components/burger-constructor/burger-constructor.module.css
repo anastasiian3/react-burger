@@ -13,8 +13,13 @@
 }
 
 .container__hover {
-  /* border: 1px dashed #07420eec; */
-  background: radial-gradient(circle, rgba(25, 45, 24, 1) 0%, rgba(19, 19, 22, 1) 90%);
+  background: radial-gradient(circle, rgba(25, 45, 24, 1) 0%, rgba(19, 19, 22, 1) 95%);
+}
+
+.container_type_empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .list {
