@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import itemsStyles from './ingredients-category.module.css';
 import PropTypes from 'prop-types';
-import { ingredientsPropTypes } from '../../utils/prop-types';
+import { useSelector } from 'react-redux';
 
-const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }) => {
+const IngredientsCategory = forwardRef(({ title, id, type }, ref) => {
+  const items = useSelector((state) => state.ingredientsReducer.ingredients);
+
   return (
     <section>
       <h3
@@ -13,13 +15,15 @@ const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }
       >
         {title}
       </h3>
-      <ul className={`${itemsStyles.list}`}>
-        {ingredients.map((item) => {
+      <ul
+        className={`${itemsStyles.list}`}
+        ref={ref}
+      >
+        {items?.map((item) => {
           return (
             item.type === type && (
               <li key={item._id}>
                 <IngredientCard
-                  onIngredientClick={onIngredientClick}
                   ingredient={item}
                   count={item.__v}
                 />
@@ -30,14 +34,12 @@ const IngredientsCategory = ({ title, id, type, ingredients, onIngredientClick }
       </ul>
     </section>
   );
-};
+});
 
 IngredientsCategory.propTypes = {
-  // data: PropTypes.string,
-  // id: PropTypes.string,
-  // type: PropTypes.string,
-  ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
-  onIngredientClick: PropTypes.func,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default IngredientsCategory;

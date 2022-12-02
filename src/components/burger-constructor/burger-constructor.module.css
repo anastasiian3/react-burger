@@ -8,6 +8,18 @@
   flex-direction: column;
   gap: 15px;
   align-items: flex-end;
+  border: 1px solid #131316;
+  transition: all 0.3s ease-out;
+}
+
+.container__hover {
+  background: radial-gradient(circle, rgba(25, 45, 24, 1) 0%, rgba(19, 19, 22, 1) 95%);
+}
+
+.container_type_empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .list {
@@ -32,6 +44,10 @@
   background: #8585ad;
 }
 
+.list::-webkit-scrollbar-thumb:hover {
+  background: #6a6a8f;
+}
+
 .ingredient {
   display: flex;
   align-items: center;
@@ -41,5 +57,5 @@
 .total {
   display: flex;
   gap: 40px;
-  justify-content: end;
+  justify-content: flex-end;
 }

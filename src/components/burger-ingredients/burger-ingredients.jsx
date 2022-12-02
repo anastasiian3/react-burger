@@ -2,24 +2,33 @@ import React, { useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import PropTypes from 'prop-types';
-import { ingredientsPropTypes } from '../../utils/prop-types';
+import { useInView } from 'react-intersection-observer';
 import { INGREDIENTS } from '../../utils/const';
 
-const BurgerIngredients = ({ ingredients }) => {
-  const [current, setCurrent] = useState('bun');
+const BurgerIngredients = () => {
+  const [current, setCurrent] = useState(INGREDIENTS.BUN);
+
+  const options = {
+    threshold: 0,
+  };
+
+  const [bunRef, inViewBun] = useInView(options);
+  const [mainRef, inViewMain] = useInView(options);
+  const [sauceRef, inViewSauce] = useInView(options);
+
+  React.useEffect(() => {
+    if (inViewBun) {
+      setCurrent(INGREDIENTS.BUN);
+    } else if (inViewSauce) {
+      setCurrent(INGREDIENTS.SAUCE);
+    } else if (inViewMain) {
+      setCurrent(INGREDIENTS.MAIN);
+    }
+  }, [inViewBun, inViewMain, inViewSauce]);
 
   const clickOnIngredientType = (id) => {
     setCurrent(id);
     document.querySelector(`#${id}`)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const [ingredientsModal, setIngredientsModal] = useState(null);
-  //закрытие всех модальных окон
-  const closeAllModals = () => {
-    setIngredientsModal(null);
   };
 
   return (
@@ -56,38 +65,23 @@ const BurgerIngredients = ({ ingredients }) => {
           id={INGREDIENTS.BUN}
           title={'Булки'}
           type={INGREDIENTS.BUN}
-          ingredients={ingredients}
-          onIngredientClick={setIngredientsModal}
+          ref={bunRef}
         />
         <IngredientsCategory
           id={INGREDIENTS.SAUCE}
           title={'Соусы'}
           type={INGREDIENTS.SAUCE}
-          ingredients={ingredients}
-          onIngredientClick={setIngredientsModal}
+          ref={sauceRef}
         />
         <IngredientsCategory
           id={INGREDIENTS.MAIN}
           title={'Начинки'}
           type={INGREDIENTS.MAIN}
-          ingredients={ingredients}
-          onIngredientClick={setIngredientsModal}
+          ref={mainRef}
         />
       </div>
-      {ingredientsModal && (
-        <Modal
-          onOverlayClick={closeAllModals}
-          closeAllModals={closeAllModals}
-        >
-          <IngredientDetails ingredients={ingredientsModal} />
-        </Modal>
-      )}
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired,
 };
 
 export default BurgerIngredients;
