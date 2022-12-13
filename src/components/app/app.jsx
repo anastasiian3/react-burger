@@ -15,28 +15,17 @@ import IngredientPage from '../../pages/ingredient-page/ingredient-page';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrdersPage from '../../pages/orders-page/orders-page';
-import { checkAuth, getUser } from '../../services/actions/user-authentication';
+import { checkAuth } from '../../services/actions/user-authentication';
 
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  //const accessCookie = getCookie('accessToken');
-  //const refreshToken = getCookie('refreshToken');
 
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(checkAuth());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (!accessCookie && refreshToken) {
-  //     dispatch(updateToken());
-  //   }
-  //   if (accessCookie && refreshToken) {
-  //     dispatch(getUser());
-  //   }
-  // }, [dispatch, accessCookie, refreshToken]);
 
   const background = location.state?.background;
 

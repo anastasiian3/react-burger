@@ -1,36 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../forms.module.css';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authorizeUser } from '../../services/actions/user-authentication';
 import { getCookie } from '../../utils/cookies';
+import { useForm } from '../../utils/utils';
 
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
 
-  //const user = useSelector((state) => state.userAuthReducer.user);
-
   const cookie = getCookie('accessToken');
 
-  const [form, changeForm] = useState({
+  const { values, handleChange } = useForm({
     email: 'anastasa3n@yandex.ru',
     password: 'stellar',
   });
 
-  const onChange = (event) => {
-    changeForm({ ...form, [event.target.name]: event.target.value });
-  };
-
-  const from = location.state?.from.pathname;
-  console.log(from);
-
   const handleSubmitUserInfo = (event) => {
     event.preventDefault();
-    console.log(location);
-    dispatch(authorizeUser(form)).then(() => {
+    dispatch(authorizeUser(values)).then(() => {
       history.push(location.state?.from || '/');
     });
   };
@@ -45,22 +36,23 @@ function Login() {
         <fieldset className={`${styles.fieldset}`}>
           <h2 className={`text text_type_main-medium`}>Вход</h2>
           <EmailInput
-            onChange={onChange}
-            value={form.email}
+            onChange={handleChange}
+            value={values.email}
             name={'email'}
             placeholder='E-mail'
             isIcon={false}
             extraClass='mb-2'
           />
           <PasswordInput
-            onChange={onChange}
-            value={form.password}
+            onChange={handleChange}
+            value={values.password}
             name={'password'}
             extraClass='mb-2'
           />
           <Button
             htmlType={'submit'}
             size={'medium'}
+            disabled={!values.email && !values.password}
           >
             Войти
           </Button>

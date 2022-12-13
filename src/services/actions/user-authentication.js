@@ -1,7 +1,6 @@
 import {
   changeUserInfo,
   createNewUser,
-  getToken,
   getUserInfo,
   loginUser,
   logoutUser,
@@ -38,10 +37,6 @@ export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
-// export const REFRESH_TOKEN_REQUEST = 'REFRESH_TOKEN_REQUEST';
-// export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
-// export const REFRESH_TOKEN_FAILURE = 'REFRESH_TOKEN_FAILURE';
-
 export const AUTH_CHECKED = 'AUTH_CHECKED';
 
 export function userRegister(form) {
@@ -56,7 +51,6 @@ export function userRegister(form) {
             type: USER_REGISTRATION_SUCCESS,
             payload: res.user,
           });
-          console.log(res);
           setCookie('accessToken', res.accessToken);
           setCookie('refreshToken', res.refreshToken);
         } else {
@@ -85,7 +79,6 @@ export const authorizeUser = (form) => (dispatch) => {
           type: USER_LOGIN_SUCCESS,
           payload: res.user,
         });
-        console.log(res);
         setCookie('accessToken', res.accessToken);
         setCookie('refreshToken', res.refreshToken);
       } else {
@@ -114,7 +107,6 @@ export function forgotPassword(email) {
           dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
           });
-          console.log(res);
         } else {
           dispatch({
             type: FORGOT_PASSWORD_FAILURE,
@@ -141,7 +133,6 @@ export function resetPassword(data) {
           dispatch({
             type: RESET_PASSWORD_SUCCESS,
           });
-          console.log(res);
         } else {
           dispatch({
             type: RESET_PASSWORD_FAILURE,
@@ -170,7 +161,6 @@ export const logout = () => (dispatch) => {
           type: USER_LOGOUT_SUCCESS,
           user: null,
         });
-        console.log(res);
       } else {
         dispatch({
           type: USER_LOGOUT_FAILURE,
@@ -191,7 +181,6 @@ export const getUser = () => (dispatch) => {
   });
   return getUserInfo()
     .then((res) => {
-      //console.log(res);
       if (res.success) {
         dispatch({
           type: GET_USER_SUCCESS,
@@ -203,7 +192,7 @@ export const getUser = () => (dispatch) => {
       dispatch({
         type: GET_USER_FAILURE,
       });
-      //console.log(error);
+      console.log(error);
     });
 };
 
@@ -229,7 +218,6 @@ export function changeUser(form) {
             type: UPDATE_USER_SUCCESS,
             payload: res.user,
           });
-          console.log(res.user);
         } else {
           dispatch({
             type: UPDATE_USER_FAILURE,

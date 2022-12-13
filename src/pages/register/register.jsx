@@ -1,34 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../forms.module.css';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { userRegister } from '../../services/actions/user-authentication';
 import { getCookie } from '../../utils/cookies';
+import { useForm } from '../../utils/utils';
 
 function Register() {
   const dispatch = useDispatch();
-
-  const user = useSelector((state) => state.userAuthReducer.user);
-  console.log(user);
-
   const cookie = getCookie('accessToken');
-  console.log(cookie);
-  const [form, changeForm] = useState({
-    name: '',
+
+  const { values, handleChange } = useForm({
     email: '',
     password: '',
+    name: '',
   });
-
-  const { name, email, password } = form;
-
-  const onChange = (event) => {
-    changeForm({ ...form, [event.target.name]: event.target.value });
-  };
 
   const handleSubmitInfo = (event) => {
     event.preventDefault();
-    dispatch(userRegister(form));
+    dispatch(userRegister(values));
   };
 
   if (cookie) {
@@ -41,28 +32,28 @@ function Register() {
           <h2 className={`text text_type_main-medium`}>Регистрация</h2>
           <Input
             type={'text'}
-            value={form.name}
+            value={values.name}
             name={'name'}
-            onChange={onChange}
+            onChange={handleChange}
             size={'default'}
             placeholder={'Имя'}
           />
           <EmailInput
-            onChange={onChange}
-            value={form.email}
+            onChange={handleChange}
+            value={values.email}
             name={'email'}
             placeholder='E-mail'
             isIcon={false}
           />
           <PasswordInput
-            onChange={onChange}
-            value={form.password}
+            onChange={handleChange}
+            value={values.password}
             name={'password'}
           />
           <Button
             htmlType={'submit'}
             size={'medium'}
-            disabled={!name || !email || !password}
+            disabled={!values.name || !values.email || !values.password}
           >
             Зарегистрироваться
           </Button>

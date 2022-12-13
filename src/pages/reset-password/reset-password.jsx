@@ -1,30 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../forms.module.css';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from '../../services/actions/user-authentication';
 import { getCookie } from '../../utils/cookies';
+import { useForm } from '../../utils/utils';
 
 function ResetPassword() {
   const dispatch = useDispatch();
   const location = useLocation();
   const isResetSuccess = useSelector((state) => state.userAuthReducer.resetPasswordSuccess);
-  const [form, changeForm] = useState({
+
+  const { values, handleChange } = useForm({
     password: '',
     token: '',
   });
-  const onChange = (event) => {
-    changeForm({ ...form, [event.target.name]: event.target.value });
-  };
 
   const handleResetPassword = (event) => {
     event.preventDefault();
-    console.log(form);
 
-    const { password, token } = form;
-    if (password && token) {
-      dispatch(resetPassword(form));
+    if (values.password && values.token) {
+      dispatch(resetPassword(values));
     }
   };
   const cookie = getCookie('accessToken');
@@ -39,16 +36,16 @@ function ResetPassword() {
         <fieldset className={`${styles.fieldset}`}>
           <h2 className={`text text_type_main-medium`}>Восстановление пароля</h2>
           <PasswordInput
-            onChange={onChange}
-            value={form.password}
+            onChange={handleChange}
+            value={values.password}
             name={'password'}
             extraClass='mb-2'
             placeholder='Введите новый пароль'
           />
           <Input
-            value={form.token}
+            value={values.token}
             name={'token'}
-            onChange={onChange}
+            onChange={handleChange}
             size={'default'}
             placeholder={'Введите код из письма'}
             type={'text'}

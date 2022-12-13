@@ -1,13 +1,8 @@
 import { URL } from './const';
 import { getCookie, setCookie } from './cookies';
 
-// const checkResponse = (res) => {
-//   return res.ok ? res.json() : Promise.reject(res.errorMessage ?? 'При загрузке данных произошла ошибка');
-// };
-
 const checkResponse = (res) => {
-  //console.log(res);
-  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  return res.ok ? res.json() : res.json().then((res) => Promise.reject(res));
 };
 
 export const getServerData = () => {
@@ -76,12 +71,11 @@ export function getUserInfo() {
 }
 
 export function changeUserInfo(form) {
-  const accessToken = getCookie('accessToken');
   return fetch(`${URL}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: accessToken,
+      Authorization: getCookie('accessToken'),
     },
     body: JSON.stringify(form),
   }).then(checkResponse);
@@ -98,7 +92,6 @@ export function getToken() {
   })
     .then(checkResponse)
     .then((res) => {
-      console.log(res);
       return res;
     });
 }
@@ -108,9 +101,7 @@ const fetchWithRefresh = async (url, options) => {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (error) {
-    //console.log(error);
     if (error.message === 'jwt expired') {
-      console.log(error.message);
       const refreshData = await getToken();
       if (!refreshData.success) {
         Promise.reject(refreshData);
@@ -118,7 +109,7 @@ const fetchWithRefresh = async (url, options) => {
       setCookie('accessToken', refreshData.accessToken);
       setCookie('refreshToken', refreshData.refreshToken);
 
-      options.headers.Authorization = refreshData.accessToken;
+      options.headers.authorization = refreshData.accessToken;
 
       const res = await fetch(url, options);
       return await checkResponse(res);

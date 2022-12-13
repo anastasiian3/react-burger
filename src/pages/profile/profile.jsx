@@ -1,48 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './profile.module.css';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink as Link, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../services/actions/user-authentication';
+import { changeUser, logout } from '../../services/actions/user-authentication';
 import OrdersPage from '../orders-page/orders-page';
+import { useForm } from '../../utils/utils';
 
 function Profile() {
   const dispatch = useDispatch();
-  //const location = useLocation();
   const history = useHistory();
   const user = useSelector((state) => state.userAuthReducer.user);
-  let userEmail = user?.email;
-  let userName = user?.name;
 
-  console.log(user);
-  // const [form, changeForm] = useState({
-  //   name: user.name,
-  //   email: user.email,
-  //   password: '',
-  // });
+  const serverValues = {
+    name: user.name,
+    email: user.email,
+    password: '',
+  };
 
-  const [name, setName] = useState(userName);
-  const [email, setEmail] = useState(userEmail);
-  const [password, setPassword] = useState('');
+  const { values, handleChange, setValues } = useForm(serverValues);
 
-  const onChangeName = (event) => {
-    const value = event.target.value;
-    setName(value);
+  const areValuesChanged =
+    values.name !== serverValues.name || values.email !== serverValues.email || values.password !== serverValues.password;
+
+  useEffect(() => {
+    if (user.name && user.email) {
+      setValues({
+        name: user.name,
+        email: user.email,
+        password: serverValues.password,
+      });
+    }
+  }, [user.name, user.email]);
+
+  const deleteUserChanges = () => {
+    setValues(serverValues);
   };
-  const onChangeEmail = (event) => {
-    const value = event.target.value;
-    setEmail(value);
+
+  const submitChangeUser = (event) => {
+    event.preventDefault();
+    dispatch(changeUser(values));
   };
-  const onChangePassword = (event) => {
-    const value = event.target.value;
-    setPassword(value);
-  };
-  // const onChangeEmail = (event) => {
-  //   setEmail({ [event.target.name]: event.target.value });
-  // };
-  // const onChangePassword = (event) => {
-  //   setPassword({ [event.target.name]: event.target.value });
-  // };
 
   const handleLogout = () => {
     dispatch(logout()).then(() => {
@@ -50,7 +48,7 @@ function Profile() {
     });
   };
 
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
 
   return (
     <div className={`text text_type_main-default ${styles.container}`}>
@@ -96,26 +94,26 @@ function Profile() {
           path={`${path}`}
           exact
         >
-          <form>
+          <form onSubmit={submitChangeUser}>
             <fieldset className={`${styles.fieldset}`}>
               <Input
-                value={name}
+                value={values.name}
                 name={'name'}
                 icon='EditIcon'
-                onChange={onChangeName}
+                onChange={handleChange}
                 size={'default'}
                 placeholder={'Имя'}
               />
               <EmailInput
-                onChange={onChangeEmail}
-                value={email}
+                onChange={handleChange}
+                value={values.email}
                 name={'email'}
                 icon='EditIcon'
                 placeholder='Логин'
               />
               <PasswordInput
-                onChange={onChangePassword}
-                value={password}
+                onChange={handleChange}
+                value={values.password}
                 name={'password'}
                 placeholder='Пароль'
                 icon='EditIcon'
@@ -126,11 +124,12 @@ function Profile() {
                 type='secondary'
                 size='medium'
                 htmlType='reset'
+                onClick={deleteUserChanges}
               >
                 Oтмена
               </Button>
               <Button
-                //disabled={!values.email && !values.password && !values.name}
+                disabled={(!values.name && !values.email && !values.password) || !areValuesChanged}
                 type={'primary'}
                 size={'medium'}
                 htmlType={'submit'}

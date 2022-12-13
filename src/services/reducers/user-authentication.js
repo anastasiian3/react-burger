@@ -6,9 +6,6 @@ import {
   GET_USER_FAILURE,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
-  REFRESH_TOKEN_FAILURE,
-  REFRESH_TOKEN_REQUEST,
-  REFRESH_TOKEN_SUCCESS,
   RESET_PASSWORD_FAILURE,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
@@ -62,12 +59,6 @@ const userInitialState = {
 
 export const userAuthReducer = (state = userInitialState, action) => {
   switch (action.type) {
-    case AUTH_CHECKED: {
-      return {
-        ...state,
-        isAuth: true,
-      };
-    }
     case USER_REGISTRATION_REQUEST: {
       return {
         ...state,
@@ -76,7 +67,6 @@ export const userAuthReducer = (state = userInitialState, action) => {
       };
     }
     case USER_REGISTRATION_SUCCESS: {
-      console.log(action.payload);
       return {
         ...state,
         user: action.payload,
@@ -101,7 +91,6 @@ export const userAuthReducer = (state = userInitialState, action) => {
       };
     }
     case USER_LOGIN_SUCCESS: {
-      console.log(action.payload);
       return {
         ...state,
         user: action.payload,
@@ -169,7 +158,7 @@ export const userAuthReducer = (state = userInitialState, action) => {
         ...state,
         logoutRequest: false,
         logoutSuccess: true,
-        user: null,
+        user: '',
         isAuth: false,
       };
     }

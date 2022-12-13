@@ -3,8 +3,11 @@ import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderButton from '../header-button/header-button';
 import { NavLink as Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AppHeader = () => {
+  const isAuth = useSelector((state) => state.userAuthReducer.isAuth);
+  const userName = useSelector((state) => state.userAuthReducer.user.name);
   return (
     <header className={styles.header}>
       <nav className={`${styles.header__nav} pt-4 pb-4`}>
@@ -31,7 +34,7 @@ const AppHeader = () => {
         </Link>
         <HeaderButton
           icon={ProfileIcon}
-          text={'Личный кабинет'}
+          text={isAuth ? userName : 'Личный кабинет'}
           to={'/profile'}
           exact
         ></HeaderButton>

@@ -50,7 +50,7 @@ const BurgerConstructor = () => {
     setIsModalOpened(false);
     dispatch({ type: RESET_CONSTRUCTOR_INGREDIENTS });
   };
-  //открытие всех модальных окон
+  //открытие модальных окон
   const openOrderModal = () => {
     if (!cookie) {
       history.replace('/login');
