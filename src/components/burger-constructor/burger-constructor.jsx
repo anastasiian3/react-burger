@@ -15,8 +15,13 @@ import { obtainOrderNumber } from '../../services/actions/order-details';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import ConstructorCard from '../constructor-card/constructor-card';
+import { getCookie } from '../../utils/cookies';
+import { useHistory } from 'react-router-dom';
 
 const BurgerConstructor = () => {
+  const cookie = getCookie('accessToken');
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const { buns, ingredients } = useSelector((state) => state.constructorReducer);
@@ -47,11 +52,23 @@ const BurgerConstructor = () => {
   };
   //открытие всех модальных окон
   const openOrderModal = () => {
-    const bunId = buns?._id;
-    const ingredientsId = ingredients.map((ingredient) => ingredient._id);
-    const userOrder = [bunId, ...ingredientsId, bunId];
-    dispatch(obtainOrderNumber(userOrder));
-    setIsModalOpened(true);
+    if (!cookie) {
+      history.replace('/login');
+    } else {
+      const bunId = buns?._id;
+      const ingredientsId = ingredients.map((ingredient) => ingredient._id);
+      const userOrder = [bunId, ...ingredientsId, bunId];
+      dispatch(obtainOrderNumber(userOrder));
+      setIsModalOpened(true);
+    }
+  };
+
+  const sendOrder = () => {
+    if (!cookie) {
+      history.replace('/login');
+    } else {
+      openOrderModal();
+    }
   };
 
   return (
@@ -128,13 +145,13 @@ const BurgerConstructor = () => {
       <div className={styles.total}>
         <TotalPrice total={totalSum} />
         <Button
-          onClick={openOrderModal}
+          onClick={sendOrder}
           htmlType={'button'}
           type='primary'
           size='large'
           disabled={ingredients.length === 0 || !buns ? true : false}
         >
-          Оформить заказ
+          {cookie ? 'Оформить заказ' : 'Войти'}
         </Button>
       </div>
 
