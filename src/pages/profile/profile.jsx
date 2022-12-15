@@ -5,7 +5,7 @@ import { NavLink as Link, Route, Switch, useHistory, useRouteMatch } from 'react
 import { useDispatch, useSelector } from 'react-redux';
 import { changeUser, logout } from '../../services/actions/user-authentication';
 import OrdersPage from '../orders-page/orders-page';
-import { useForm } from '../../utils/utils';
+import { useForm } from '../../hooks/use-form';
 
 function Profile() {
   const dispatch = useDispatch();

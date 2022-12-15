@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from '../forms.module.css';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from '../../services/actions/user-authentication';
 import { getCookie } from '../../utils/cookies';
-import { useForm } from '../../utils/utils';
+import { useForm } from '../../hooks/use-form';
 
 function ResetPassword() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const isResetSuccess = useSelector((state) => state.userAuthReducer.resetPasswordSuccess);
 
   const { values, handleChange } = useForm({
@@ -28,6 +29,10 @@ function ResetPassword() {
 
   if (cookie || isResetSuccess) {
     return <Redirect to={location.state?.from || '/'} />;
+  }
+
+  if (history.location?.state !== 'reset-password') {
+    return <Redirect to={'/'} />;
   }
 
   return (

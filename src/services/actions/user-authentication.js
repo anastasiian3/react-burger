@@ -39,6 +39,10 @@ export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 export const AUTH_CHECKED = 'AUTH_CHECKED';
 
+const checkSuccess = (res) => {
+  return res && res.success;
+};
+
 export function userRegister(form) {
   return function (dispatch) {
     dispatch({
@@ -46,7 +50,7 @@ export function userRegister(form) {
     });
     createNewUser(form)
       .then((res) => {
-        if (res && res.success) {
+        if (checkSuccess) {
           dispatch({
             type: USER_REGISTRATION_SUCCESS,
             payload: res.user,
@@ -54,16 +58,12 @@ export function userRegister(form) {
           setCookie('accessToken', res.accessToken);
           setCookie('refreshToken', res.refreshToken);
         } else {
-          dispatch({
-            type: USER_REGISTRATION_FAILURE,
-          });
+          dispatch(userRegistrationFailure);
         }
       })
       .catch((error) => {
         console.error(error);
-        dispatch({
-          type: USER_REGISTRATION_FAILURE,
-        });
+        dispatch(userRegistrationFailure);
       });
   };
 }
@@ -74,7 +74,7 @@ export const authorizeUser = (form) => (dispatch) => {
   });
   return loginUser(form)
     .then((res) => {
-      if (res && res.success) {
+      if (checkSuccess) {
         dispatch({
           type: USER_LOGIN_SUCCESS,
           payload: res.user,
@@ -82,17 +82,13 @@ export const authorizeUser = (form) => (dispatch) => {
         setCookie('accessToken', res.accessToken);
         setCookie('refreshToken', res.refreshToken);
       } else {
-        dispatch({
-          type: USER_LOGIN_FAILURE,
-        });
+        dispatch(userLoginFailure);
       }
     })
     .catch((error) => {
       console.error(error);
       alert('Возможно, вы ввели неверный пароль');
-      dispatch({
-        type: USER_LOGIN_FAILURE,
-      });
+      dispatch(userLoginFailure);
     });
 };
 
@@ -103,21 +99,17 @@ export function forgotPassword(email) {
     });
     sendForgotPasswordRequest(email)
       .then((res) => {
-        if (res && res.success) {
+        if (checkSuccess) {
           dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
           });
         } else {
-          dispatch({
-            type: FORGOT_PASSWORD_FAILURE,
-          });
+          dispatch(forgotPasswordFailure);
         }
       })
       .catch((error) => {
         console.error(error);
-        dispatch({
-          type: FORGOT_PASSWORD_FAILURE,
-        });
+        dispatch(forgotPasswordFailure);
       });
   };
 }
@@ -129,21 +121,17 @@ export function resetPassword(data) {
     });
     sendResetPasswordRequest(data)
       .then((res) => {
-        if (res && res.success) {
+        if (checkSuccess) {
           dispatch({
             type: RESET_PASSWORD_SUCCESS,
           });
         } else {
-          dispatch({
-            type: RESET_PASSWORD_FAILURE,
-          });
+          dispatch(resetPasswordFailure);
         }
       })
       .catch((error) => {
         console.error(error);
-        dispatch({
-          type: RESET_PASSWORD_FAILURE,
-        });
+        dispatch(resetPasswordFailure);
       });
   };
 }
@@ -154,7 +142,7 @@ export const logout = () => (dispatch) => {
   });
   return logoutUser()
     .then((res) => {
-      if (res && res.success) {
+      if (checkSuccess) {
         deleteCookie('refreshToken');
         deleteCookie('accessToken');
         dispatch({
@@ -162,16 +150,12 @@ export const logout = () => (dispatch) => {
           user: null,
         });
       } else {
-        dispatch({
-          type: USER_LOGOUT_FAILURE,
-        });
+        dispatch(userLogoutFailure);
       }
     })
     .catch((error) => {
       console.error(error);
-      dispatch({
-        type: USER_LOGOUT_FAILURE,
-      });
+      dispatch(userLogoutFailure);
     });
 };
 
@@ -181,7 +165,7 @@ export const getUser = () => (dispatch) => {
   });
   return getUserInfo()
     .then((res) => {
-      if (res.success) {
+      if (checkSuccess) {
         dispatch({
           type: GET_USER_SUCCESS,
           payload: res.user,
@@ -189,9 +173,7 @@ export const getUser = () => (dispatch) => {
       }
     })
     .catch((error) => {
-      dispatch({
-        type: GET_USER_FAILURE,
-      });
+      dispatch(getUserFailure);
       console.log(error);
     });
 };
@@ -213,22 +195,60 @@ export function changeUser(form) {
     });
     changeUserInfo(form)
       .then((res) => {
-        if (res && res.success) {
+        if (checkSuccess) {
           dispatch({
             type: UPDATE_USER_SUCCESS,
             payload: res.user,
           });
         } else {
-          dispatch({
-            type: UPDATE_USER_FAILURE,
-          });
+          dispatch(changeUserFailure);
         }
       })
       .catch((error) => {
         console.error(error);
-        dispatch({
-          type: UPDATE_USER_FAILURE,
-        });
+        dispatch(changeUserFailure);
       });
+  };
+}
+
+function userRegistrationFailure() {
+  return {
+    type: USER_REGISTRATION_FAILURE,
+  };
+}
+
+function userLoginFailure() {
+  return {
+    type: USER_LOGIN_FAILURE,
+  };
+}
+
+function forgotPasswordFailure() {
+  return {
+    type: FORGOT_PASSWORD_FAILURE,
+  };
+}
+
+function resetPasswordFailure() {
+  return {
+    type: RESET_PASSWORD_FAILURE,
+  };
+}
+
+function userLogoutFailure() {
+  return {
+    type: USER_LOGOUT_FAILURE,
+  };
+}
+
+function getUserFailure() {
+  return {
+    type: GET_USER_FAILURE,
+  };
+}
+
+function changeUserFailure() {
+  return {
+    type: GET_USER_FAILURE,
   };
 }

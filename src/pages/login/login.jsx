@@ -5,7 +5,7 @@ import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authorizeUser } from '../../services/actions/user-authentication';
 import { getCookie } from '../../utils/cookies';
-import { useForm } from '../../utils/utils';
+import { useForm } from '../../hooks/use-form';
 
 function Login() {
   const dispatch = useDispatch();

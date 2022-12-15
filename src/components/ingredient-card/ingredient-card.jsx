@@ -4,9 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientsPropTypes } from '../../utils/prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { CLOSE_IGREDIENT_MODAL, OPEN_IGREDIENT_MODAL } from '../../services/actions/ingredient-details';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import { OPEN_IGREDIENT_MODAL } from '../../services/actions/ingredient-details';
 import { INGREDIENTS } from '../../utils/const';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
@@ -38,11 +36,6 @@ const IngredientCard = ({ ingredient }) => {
   });
 
   const [ingredientsModal, setIngredientsModal] = useState(null);
-  // //закрытие всех модальных окон
-  // const closeAllModals = () => {
-  //   setIngredientsModal(null);
-  //   dispatch({ type: CLOSE_IGREDIENT_MODAL });
-  // };
 
   const openIgredientModal = () => {
     setIngredientsModal(ingredient);
@@ -81,15 +74,6 @@ const IngredientCard = ({ ingredient }) => {
           {ingredient.price && <CurrencyIcon type={'primary'} />}
         </p>
         <p className={`text text_type_main-default`}>{ingredient.name}</p>
-
-        {/* {ingredientsModal && (
-          <Modal
-            onOverlayClick={closeAllModals}
-            closeAllModals={closeAllModals}
-          >
-            <IngredientDetails />
-          </Modal>
-        )} */}
       </Link>
     </article>
   );

@@ -5,63 +5,66 @@ const checkResponse = (res) => {
   return res.ok ? res.json() : res.json().then((res) => Promise.reject(res));
 };
 
+function request(url, options) {
+  return fetch(url, options).then(checkResponse);
+}
+
 export const getServerData = () => {
-  return fetch(`${URL}/ingredients`).then(checkResponse);
+  return request(`${URL}/ingredients`);
 };
 
 export const makeOrder = (orderData) => {
-  return fetch(`${URL}/orders`, {
+  return request(`${URL}/orders`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ingredients: orderData }),
-  }).then(checkResponse);
+  });
 };
 
 export const createNewUser = (data) => {
   const { name, email, password } = data;
-  return fetch(`${URL}/auth/register`, {
+  return request(`${URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: name, email: email, password: password }),
-  }).then(checkResponse);
+  });
 };
 
 export const loginUser = (data) => {
   const { email, password } = data;
-  return fetch(`${URL}/auth/login`, {
+  return request(`${URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: email, password: password }),
-  }).then(checkResponse);
+  });
 };
 
 export const sendForgotPasswordRequest = (email) => {
-  return fetch(`${URL}/password-reset`, {
+  return request(`${URL}/password-reset`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(email),
-  }).then(checkResponse);
+  });
 };
 
 export const sendResetPasswordRequest = (data) => {
   const { password, token } = data;
-  return fetch(`${URL}/password-reset/reset`, {
+  return request(`${URL}/password-reset/reset`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password: password, token: token }),
-  }).then(checkResponse);
+  });
 };
 
 export const logoutUser = () => {
-  return fetch(`${URL}/auth/logout`, {
+  return request(`${URL}/auth/logout`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token: getCookie('refreshToken') }),
-  }).then(checkResponse);
+  });
 };
 
 export function getUserInfo() {
-  //const accessToken = getCookie('accessToken');
   return fetchWithRefresh(`${URL}/auth/user`, {
     headers: {
       'Content-Type': 'application/json',
@@ -71,29 +74,27 @@ export function getUserInfo() {
 }
 
 export function changeUserInfo(form) {
-  return fetch(`${URL}/auth/user`, {
+  return request(`${URL}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: getCookie('accessToken'),
     },
     body: JSON.stringify(form),
-  }).then(checkResponse);
+  });
 }
 
 export function getToken() {
   const refreshToken = getCookie('refreshToken');
-  return fetch(`${URL}/auth/token`, {
+  return request(`${URL}/auth/token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       token: refreshToken,
     }),
-  })
-    .then(checkResponse)
-    .then((res) => {
-      return res;
-    });
+  }).then((res) => {
+    return res;
+  });
 }
 
 const fetchWithRefresh = async (url, options) => {

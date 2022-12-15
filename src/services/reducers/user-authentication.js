@@ -1,5 +1,4 @@
 import {
-  AUTH_CHECKED,
   FORGOT_PASSWORD_FAILURE,
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
@@ -181,6 +180,7 @@ export const userAuthReducer = (state = userInitialState, action) => {
         user: action.payload,
         getUserRequest: false,
         getUserSuccess: true,
+        isAuth: true,
       };
     }
     case GET_USER_FAILURE: {
@@ -188,6 +188,7 @@ export const userAuthReducer = (state = userInitialState, action) => {
         ...state,
         getUserFailure: true,
         getUserRequest: false,
+        isAuth: false,
       };
     }
     default: {

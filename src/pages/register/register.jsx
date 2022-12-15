@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from '../forms.module.css';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userRegister } from '../../services/actions/user-authentication';
 import { getCookie } from '../../utils/cookies';
-import { useForm } from '../../utils/utils';
+import { useForm } from '../../hooks/use-form';
 
 function Register() {
   const dispatch = useDispatch();
   const cookie = getCookie('accessToken');
+  const history = useHistory();
 
   const { values, handleChange } = useForm({
     email: '',
@@ -20,6 +21,9 @@ function Register() {
   const handleSubmitInfo = (event) => {
     event.preventDefault();
     dispatch(userRegister(values));
+    history.replace({
+      pathname: '/',
+    });
   };
 
   if (cookie) {
