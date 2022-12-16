@@ -2,29 +2,41 @@ import React from 'react';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderButton from '../header-button/header-button';
+import { NavLink as Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AppHeader = () => {
+  const isAuth = useSelector((state) => state.userAuthReducer.isAuth);
+  const userName = useSelector((state) => state.userAuthReducer.user.name);
   return (
     <header className={styles.header}>
       <nav className={`${styles.header__nav} pt-4 pb-4`}>
         <ul className={`${styles.header__list}`}>
           <li>
             <HeaderButton
-              icon={<BurgerIcon type={'primary'} />}
+              icon={BurgerIcon}
               text={'Конструктор'}
+              to={'/'}
+              exact
             ></HeaderButton>
           </li>
           <li>
             <HeaderButton
-              icon={<ListIcon type={'primary'} />}
+              icon={ListIcon}
               text={'Лента заказов'}
+              to={'/feed'}
+              exact
             ></HeaderButton>
           </li>
         </ul>
-        <Logo />
+        <Link to={'/'}>
+          <Logo />
+        </Link>
         <HeaderButton
-          icon={<ProfileIcon type={'primary'} />}
-          text={'Личный кабинет'}
+          icon={ProfileIcon}
+          text={isAuth ? userName : 'Личный кабинет'}
+          to={'/profile'}
+          exact
         ></HeaderButton>
       </nav>
     </header>

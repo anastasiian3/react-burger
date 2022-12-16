@@ -4,11 +4,10 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientsPropTypes } from '../../utils/prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { CLOSE_IGREDIENT_MODAL, OPEN_IGREDIENT_MODAL } from '../../services/actions/ingredient-details';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import { OPEN_IGREDIENT_MODAL } from '../../services/actions/ingredient-details';
 import { INGREDIENTS } from '../../utils/const';
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
@@ -37,16 +36,12 @@ const IngredientCard = ({ ingredient }) => {
   });
 
   const [ingredientsModal, setIngredientsModal] = useState(null);
-  //закрытие всех модальных окон
-  const closeAllModals = () => {
-    setIngredientsModal(null);
-    dispatch({ type: CLOSE_IGREDIENT_MODAL });
-  };
 
   const openIgredientModal = () => {
     setIngredientsModal(ingredient);
     dispatch({ type: OPEN_IGREDIENT_MODAL, payload: ingredient });
   };
+  const location = useLocation();
 
   return (
     <article
@@ -54,33 +49,32 @@ const IngredientCard = ({ ingredient }) => {
       ref={dragRef}
       style={{ opacity }}
     >
-      {count > 0 && (
-        <Counter
-          count={count}
-          size='default'
-          className={`text text_type_digits-default`}
+      <Link
+        to={{
+          pathname: `ingredients/${ingredient._id}`,
+          state: { background: location },
+        }}
+        className={styles.link}
+      >
+        {count > 0 && (
+          <Counter
+            count={count}
+            size='default'
+            className={`text text_type_digits-default`}
+          />
+        )}
+        <img
+          className={`ml-4 mr-4 ${styles.img}`}
+          src={ingredient.image}
+          alt={ingredient.name}
+          onClick={openIgredientModal}
         />
-      )}
-      <img
-        className={`ml-4 mr-4 ${styles.img}`}
-        src={ingredient.image}
-        alt={ingredient.name}
-        onClick={openIgredientModal}
-      />
-      <p className={`${styles.price} mt-1 mb-1 text text_type_digits-default`}>
-        {ingredient.price}
-        {ingredient.price && <CurrencyIcon type={'primary'} />}
-      </p>
-      <p className={`text text_type_main-default`}>{ingredient.name}</p>
-
-      {ingredientsModal && (
-        <Modal
-          onOverlayClick={closeAllModals}
-          closeAllModals={closeAllModals}
-        >
-          <IngredientDetails />
-        </Modal>
-      )}
+        <p className={`${styles.price} mt-1 mb-1 text text_type_digits-default`}>
+          {ingredient.price}
+          {ingredient.price && <CurrencyIcon type={'primary'} />}
+        </p>
+        <p className={`text text_type_main-default`}>{ingredient.name}</p>
+      </Link>
     </article>
   );
 };

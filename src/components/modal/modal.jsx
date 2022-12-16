@@ -20,7 +20,7 @@ const Modal = ({ closeAllModals, children }) => {
     return () => {
       document.removeEventListener('keydown', onEscKeydown);
     };
-  }, []);
+  }, [closeAllModals]);
 
   return ReactDOM.createPortal(
     <>

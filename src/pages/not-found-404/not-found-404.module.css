@@ -1,12 +1,26 @@
-.button {
-  text-decoration: none;
+.container {
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30vh;
+  gap: 7vh;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5vh;
+}
+
+.info__link {
+  text-decoration: none;
+  color: rgb(1, 234, 255);
   position: relative;
   transition: text-decoration 0.5s ease-in-out;
 }
 
-.button::after {
+.info__link::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -14,16 +28,12 @@
   height: 1px;
   bottom: 0;
   left: 0;
-  background-color: #6d6df0;
+  background-color: rgb(1, 234, 255);
   transform-origin: bottom right;
   transition: transform 0.25s ease-in-out;
 }
 
-.button:hover::after {
+.info__link:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
-}
-
-.button_type_active {
-  color: #fff;
 }
