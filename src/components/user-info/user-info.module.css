@@ -1,11 +1,4 @@
-.container {
-  display: flex;
-  gap: 60px;
-  margin-top: 12vh;
-  justify-content: center;
-}
-
-/* .fieldset {
+.fieldset {
   border: none;
   padding: 0;
   margin: 0;
@@ -18,4 +11,4 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 40px;
-} */
+}
