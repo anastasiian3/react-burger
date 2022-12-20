@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './user-menu.module.css';
 
-import { NavLink as Link, useHistory } from 'react-router-dom';
+import { NavLink as Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../services/actions/user-authentication';
 
 function UserMenu() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
   const handleLogout = () => {
     dispatch(logout()).then(() => {
@@ -49,8 +50,10 @@ function UserMenu() {
           </Link>
         </li>
       </ul>
-      <p className={`text_color_inactive ${styles.navigation__text}`}>
-        В этом разделе вы можете изменить свои персональные данные
+      <p className={`text text_type_main-default text_color_inactive ${styles.navigation__text}`}>
+        {location.pathname.includes('/profile/orders')
+          ? 'В этом разделе вы можете просмотреть свою историю заказов'
+          : 'В этом разделе вы можете изменить свои персональные данные'}
       </p>
     </nav>
   );

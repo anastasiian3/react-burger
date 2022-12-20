@@ -1,10 +1,13 @@
 import React from 'react';
+import OrdersHistory from '../../components/orders-history/orders-history';
+import UserMenu from '../../components/user-menu/user-menu';
 import styles from './orders-page.module.css';
 
 function OrdersPage() {
   return (
     <div className={`${styles.container}`}>
-      <h2 className={`text text_type_main-large`}>Страница в разработке</h2>
+      <UserMenu />
+      <OrdersHistory />
     </div>
   );
 }
