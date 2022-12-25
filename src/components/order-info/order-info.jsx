@@ -7,6 +7,7 @@ import { INGREDIENTS, wsUrl } from '../../utils/const';
 import { getCookie } from '../../utils/cookies';
 import styles from './order-info.module.css';
 import PropTypes from 'prop-types';
+import Loader from '../loader/loader';
 
 function OrderInfo({ inModal }) {
   const orders = useSelector((store) => store.wsReducer.orders);
@@ -64,7 +65,9 @@ function OrderInfo({ inModal }) {
 
   const numberStyles = !inModal ? `${styles.number}` : '';
 
-  return (
+  return orders.length === 0 ? (
+    <Loader />
+  ) : (
     <section className={`${styles.container}`}>
       <p className={`text text_type_digits-default mb-10 ${numberStyles}`}>#{selectedOrder?.number}</p>
       <h1 className={`text text_type_main-medium mb-2`}>{selectedOrder?.name}</h1>
