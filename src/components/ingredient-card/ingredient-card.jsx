@@ -8,10 +8,11 @@ import { OPEN_IGREDIENT_MODAL } from '../../services/actions/ingredient-details'
 import { INGREDIENTS } from '../../utils/const';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
+import { getConstructorIngredients } from '../../utils/selectors';
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
-  const { buns, ingredients } = useSelector((state) => state.constructorReducer);
+  const { buns, ingredients } = useSelector(getConstructorIngredients);
 
   let count = 0;
 

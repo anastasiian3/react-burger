@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import OrderItem from '../../components/order-item/order-item';
+import { getOrders } from '../../utils/selectors';
 import styles from './orders-history.module.css';
 
 function OrdersHistory() {
-  const orders = useSelector((store) => store.wsReducer.orders);
+  // const orders = useSelector((store) => store.wsReducer.orders);
+  const orders = useSelector(getOrders);
 
   return (
     <ul className={`${styles.order_list}`}>

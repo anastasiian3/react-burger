@@ -5,6 +5,7 @@ import OrderItem from '../../components/order-item/order-item';
 import OrdersStatus from '../../components/orders-status/orders-status';
 import { closeConnectionWebSocket, startConnectionWebSocket } from '../../services/actions/web-socket';
 import { wsUrl } from '../../utils/const';
+import { getOrders } from '../../utils/selectors';
 import styles from './feed.module.css';
 
 function Feed() {
@@ -16,8 +17,8 @@ function Feed() {
     };
   }, [dispatch]);
 
-  const orders = useSelector((state) => state.wsReducer.orders);
-  console.log(orders);
+  const orders = useSelector(getOrders);
+
   return orders.length === 0 ? (
     <Loader />
   ) : (

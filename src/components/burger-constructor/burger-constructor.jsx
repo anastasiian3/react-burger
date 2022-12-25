@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ConstructorCard from '../constructor-card/constructor-card';
 import { getCookie } from '../../utils/cookies';
 import { Link, useHistory } from 'react-router-dom';
+import { getConstructorIngredients } from '../../utils/selectors';
 
 const BurgerConstructor = () => {
   const cookie = getCookie('accessToken');
@@ -24,7 +25,7 @@ const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
 
-  const { buns, ingredients } = useSelector((state) => state.constructorReducer);
+  const { buns, ingredients } = useSelector(getConstructorIngredients);
 
   const totalSum = useMemo(() => {
     return ingredients.reduce((total, item) => total + item.price, buns ? buns.price * 2 : 0);

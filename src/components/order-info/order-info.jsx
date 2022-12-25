@@ -8,10 +8,11 @@ import { getCookie } from '../../utils/cookies';
 import styles from './order-info.module.css';
 import PropTypes from 'prop-types';
 import Loader from '../loader/loader';
+import { getAllIngredients, getOrders } from '../../utils/selectors';
 
 function OrderInfo({ inModal }) {
-  const orders = useSelector((store) => store.wsReducer.orders);
-  const allIngredients = useSelector((state) => state.ingredientsReducer.ingredients);
+  const orders = useSelector(getOrders);
+  const allIngredients = useSelector(getAllIngredients);
   const dispatch = useDispatch();
   const { id } = useParams();
   const selectedOrder = orders.find((ingr) => ingr._id === id);

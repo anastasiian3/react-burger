@@ -14,13 +14,13 @@ function OrdersStatus() {
         <div className={`${styles.orders_container}`}>
           <h2 className={'text text_type_main-medium mb-6'}>Готовы:</h2>
           <ul className={styles.order_status}>
-            {statusDone.slice(0, 5).map((order) => {
+            {statusDone.slice(0, 20).map((order) => {
               return (
                 <li
                   key={order._id}
                   className={`${styles.done} text text_type_digits-default mb-2`}
                 >
-                  {order.number}
+                  #{order.number}
                 </li>
               );
             })}
@@ -32,7 +32,7 @@ function OrdersStatus() {
             {statusInProgress.length === 0 ? (
               <p className={`text text_type_main-default`}>Пока ничего не готовим</p>
             ) : (
-              statusInProgress.slice(0, 5).map((order) => {
+              statusInProgress.slice(0, 20).map((order) => {
                 return (
                   <li
                     key={order._id}

@@ -3,12 +3,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { INGREDIENTS } from '../../utils/const';
+import { getAllIngredients } from '../../utils/selectors';
 import OrderIcon from '../order-icon/order-icon';
 import styles from './order-item.module.css';
 
 function OrderItem(props) {
   const { createdAt, ingredients, _id, number, name, status } = props;
-  const allIngredients = useSelector((state) => state.ingredientsReducer.ingredients);
+  const allIngredients = useSelector(getAllIngredients);
   const isOrderDone = (status) => {
     if (status === 'done') {
       return 'Выполнен';

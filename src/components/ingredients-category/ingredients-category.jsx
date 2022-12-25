@@ -3,9 +3,10 @@ import IngredientCard from '../ingredient-card/ingredient-card';
 import itemsStyles from './ingredients-category.module.css';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { getAllIngredients } from '../../utils/selectors';
 
 const IngredientsCategory = forwardRef(({ title, id, type }, ref) => {
-  const items = useSelector((state) => state.ingredientsReducer.ingredients);
+  const items = useSelector(getAllIngredients);
 
   return (
     <section>

@@ -19,13 +19,14 @@ import { checkAuth } from '../../services/actions/user-authentication';
 import Loader from '../loader/loader';
 import Feed from '../../pages/feed/feed';
 import OrderInfo from '../order-info/order-info';
+import { getIngredientsDetailedInfo } from '../../utils/selectors';
 
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
 
-  const { ingredients } = useSelector((state) => state.ingredientsReducer);
+  const { ingredients } = useSelector(getIngredientsDetailedInfo);
 
   useEffect(() => {
     dispatch(getIngredients());
