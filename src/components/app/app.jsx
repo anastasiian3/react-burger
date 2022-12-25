@@ -17,6 +17,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrdersPage from '../../pages/orders-page/orders-page';
 import { checkAuth } from '../../services/actions/user-authentication';
 import Loader from '../loader/loader';
+import Feed from '../../pages/feed/feed';
+import OrderInfo from '../order-info/order-info';
 
 function App() {
   const dispatch = useDispatch();
@@ -73,6 +75,18 @@ function App() {
           >
             <ResetPassword />
           </Route>
+          <Route
+            path={'/feed'}
+            exact
+          >
+            <Feed />
+          </Route>
+          <Route
+            path={'/feed/:id'}
+            exact
+          >
+            <OrderInfo inModal={false} />
+          </Route>
           <ProtectedRoute
             path={'/profile'}
             exact
@@ -84,6 +98,12 @@ function App() {
             exact
           >
             <OrdersPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path={'/profile/orders/:id'}
+          >
+            <OrderInfo inModal={false} />
           </ProtectedRoute>
           <Route
             path={'/ingredients/:id'}
@@ -98,14 +118,38 @@ function App() {
       )}
 
       {background && (
-        <Route path={'/ingredients/:id'}>
-          <Modal
-            closeAllModals={closeIngredientModal}
-            onOverlayClick={closeIngredientModal}
+        <Switch>
+          <Route path={'/ingredients/:id'}>
+            <Modal
+              closeAllModals={closeIngredientModal}
+              onOverlayClick={closeIngredientModal}
+            >
+              <IngredientDetails />
+            </Modal>
+          </Route>
+          <Route
+            exact
+            path={'/feed/:id'}
           >
-            <IngredientDetails />
-          </Modal>
-        </Route>
+            <Modal
+              closeAllModals={closeIngredientModal}
+              onOverlayClick={closeIngredientModal}
+            >
+              <OrderInfo inModal={true} />
+            </Modal>
+          </Route>
+          <ProtectedRoute
+            exact
+            path={'/profile/orders/:id'}
+          >
+            <Modal
+              closeAllModals={closeIngredientModal}
+              onOverlayClick={closeIngredientModal}
+            >
+              <OrderInfo inModal={true} />
+            </Modal>
+          </ProtectedRoute>
+        </Switch>
       )}
     </div>
   );

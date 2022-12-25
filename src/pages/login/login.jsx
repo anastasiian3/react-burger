@@ -15,8 +15,8 @@ function Login() {
   const cookie = getCookie('accessToken');
 
   const { values, handleChange } = useForm({
-    email: 'anastasa3n@yandex.ru',
-    password: 'stellar',
+    email: '',
+    password: '',
   });
 
   const handleSubmitUserInfo = (event) => {

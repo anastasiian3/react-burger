@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './order-icon.module.css';
+import PropTypes from 'prop-types';
 
 function OrderIcon({ ingredients }) {
   return (
@@ -41,5 +42,9 @@ function OrderIcon({ ingredients }) {
     </ul>
   );
 }
+
+OrderIcon.propTypes = {
+  ingredients: PropTypes.any.isRequired,
+};
 
 export default OrderIcon;

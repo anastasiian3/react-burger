@@ -157,7 +157,7 @@ const BurgerConstructor = () => {
         ) : (
           <Link
             to={'/login'}
-            exact
+            exact='true'
           >
             <Button
               htmlType={'button'}

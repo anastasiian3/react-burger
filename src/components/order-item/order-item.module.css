@@ -4,8 +4,7 @@
   border-radius: 40px;
   transition: all 0.2s ease-in-out;
   border: 1px solid #1c1c21;
-  max-width: 844px;
-  min-width: 844px;
+  position: relative;
 }
 
 .item:hover {

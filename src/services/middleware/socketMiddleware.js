@@ -1,15 +1,19 @@
+import { getCookie } from '../../utils/cookies';
+import { startConnectionWebSocket } from '../actions/web-socket';
+
 export const socketMiddleware = (wsActions) => {
   return (store) => {
     let socket = null;
     let isConnected = false;
     let reconnectTimer = 0;
+    let url = '';
 
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
       const { wsInit, wsClosing, onOpen, onClose, onError, onMessage } = wsActions;
       if (type === wsInit) {
-        //url = action.payload;
+        url = action.payload;
         socket = new WebSocket(payload);
         isConnected = true;
       }
@@ -33,7 +37,11 @@ export const socketMiddleware = (wsActions) => {
 
           if (isConnected) {
             reconnectTimer = window.setTimeout(() => {
-              dispatch({ type: wsInit, payload });
+              if (url.includes('token')) {
+                const accessToken = getCookie('accessToken').split('Bearer ')[1];
+                url = url.replace(/\?token=.*/, `orders?token=${accessToken}`);
+              }
+              dispatch(startConnectionWebSocket(url));
             }, 3000);
           }
         };

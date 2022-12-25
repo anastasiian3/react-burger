@@ -1,19 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import OrderItem from '../../components/order-item/order-item';
-import { closeConnectionWebSocket, startTokenConnectionWebSocket } from '../../services/actions/web-socket';
 import styles from './orders-history.module.css';
 
 function OrdersHistory() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(startTokenConnectionWebSocket());
-    return () => {
-      dispatch(closeConnectionWebSocket());
-    };
-  }, [dispatch]);
-
   const orders = useSelector((store) => store.wsReducer.orders);
 
   return (

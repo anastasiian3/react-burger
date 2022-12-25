@@ -1,7 +1,7 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { INGREDIENTS } from '../../utils/const';
 import OrderIcon from '../order-icon/order-icon';
 import styles from './order-item.module.css';
@@ -19,32 +19,37 @@ function OrderItem(props) {
     }
   };
 
-  const ingredientsInOrder = ingredients.map((id) => allIngredients.find((ingr) => ingr._id === id));
+  const location = useLocation();
 
-  const totalOrderSum = useMemo(() => {
-    return ingredientsInOrder.reduce(
-      (total, item) => total + (item.type === INGREDIENTS.BUN ? item.price * 2 : item.price),
-      0
-    );
-  }, [ingredientsInOrder]);
+  const isStatusShown = location?.pathname.includes('/profile/orders') ? isOrderDone(status) : null;
 
-  const idDone = isOrderDone(status) === 'Выполнен' ? `${styles.status_done}` : ``;
+  const ingredientsInOrder = ingredients.map((id) => id !== null && allIngredients.find((ingr) => ingr._id === id));
+
+  const totalOrderSum = ingredientsInOrder?.reduce(
+    (total, item) => total + (item.type === INGREDIENTS.BUN ? item.price * 2 : item.price),
+    0
+  );
+
+  const isDone = isOrderDone(status) === 'Выполнен' ? `${styles.status_done}` : ``;
 
   return (
-    <li className={`${styles.item} p-6`}>
+    <li className={`${styles.item} pt-6 pl-6 pr-6`}>
       <Link
-        to={'/login'}
+        to={{
+          pathname: `${location.pathname}/${_id}`,
+          state: { background: location },
+        }}
         className={styles.link}
       >
-        <div className={`${styles.info} mt-6 mb-6`}>
+        <div className={`${styles.info} mb-6`}>
           <p className={`text text_type_digits-default`}>{`#${number}`}</p>
           <FormattedDate
             className={`text text_type_main-default text_color_inactive`}
             date={new Date(createdAt)}
           />
         </div>
-        <h3 className={`text text_type_main-medium mb-2`}>{name}</h3>
-        <p className={`${idDone} text text_type_main-default`}>{isOrderDone(status)}</p>
+        <h3 className={`text text_type_main-medium`}>{name}</h3>
+        <p className={`${isDone} text text_type_main-default`}>{isStatusShown}</p>
         <div className={`${styles.info} mt-6 mb-6`}>
           <OrderIcon ingredients={ingredientsInOrder} />
           <div className={`${styles.price} text text_type_digits-default`}>

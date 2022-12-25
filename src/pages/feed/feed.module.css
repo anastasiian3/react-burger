@@ -1,0 +1,36 @@
+.feed {
+  display: flex;
+  flex-direction: column;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.container {
+  display: flex;
+  gap: 60px;
+}
+
+.order_list {
+  list-style-type: none;
+  margin: 0;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-height: 78vh;
+  overflow: auto;
+}
+
+.order_list::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+  margin-left: 8px;
+}
+
+.order_list::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.order_list::-webkit-scrollbar-thumb:hover {
+  background: #6a6a8f;
+}
