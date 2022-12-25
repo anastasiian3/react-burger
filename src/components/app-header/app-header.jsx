@@ -4,10 +4,11 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 import HeaderButton from '../header-button/header-button';
 import { NavLink as Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getUserName, isUserAuth } from '../../utils/selectors';
 
 const AppHeader = () => {
-  const isAuth = useSelector((state) => state.userAuthReducer.isAuth);
-  const userName = useSelector((state) => state.userAuthReducer.user.name);
+  const isAuth = useSelector(isUserAuth);
+  const userName = useSelector(getUserName);
   return (
     <header className={styles.header}>
       <nav className={`${styles.header__nav} pt-4 pb-4`}>

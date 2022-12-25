@@ -16,7 +16,7 @@ export const getServerData = () => {
 export const makeOrder = (orderData) => {
   return request(`${URL}/orders`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', authorization: getCookie('accessToken') },
     body: JSON.stringify({ ingredients: orderData }),
   });
 };

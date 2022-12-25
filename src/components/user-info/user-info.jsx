@@ -4,10 +4,11 @@ import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-de
 import { useDispatch, useSelector } from 'react-redux';
 import { changeUser } from '../../services/actions/user-authentication';
 import { useForm } from '../../hooks/use-form';
+import { getDetailedUser } from '../../utils/selectors';
 
 function UserInfo() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userAuthReducer.user);
+  const user = useSelector(getDetailedUser);
 
   const serverValues = {
     name: user.name,

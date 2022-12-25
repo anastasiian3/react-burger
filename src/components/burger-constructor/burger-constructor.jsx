@@ -16,7 +16,8 @@ import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import ConstructorCard from '../constructor-card/constructor-card';
 import { getCookie } from '../../utils/cookies';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { getConstructorIngredients } from '../../utils/selectors';
 
 const BurgerConstructor = () => {
   const cookie = getCookie('accessToken');
@@ -24,7 +25,7 @@ const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
 
-  const { buns, ingredients } = useSelector((state) => state.constructorReducer);
+  const { buns, ingredients } = useSelector(getConstructorIngredients);
 
   const totalSum = useMemo(() => {
     return ingredients.reduce((total, item) => total + item.price, buns ? buns.price * 2 : 0);
@@ -144,15 +145,30 @@ const BurgerConstructor = () => {
       </div>
       <div className={styles.total}>
         <TotalPrice total={totalSum} />
-        <Button
-          onClick={sendOrder}
-          htmlType={'button'}
-          type='primary'
-          size='large'
-          disabled={ingredients.length === 0 || !buns ? true : false}
-        >
-          {cookie ? 'Оформить заказ' : 'Войти'}
-        </Button>
+        {cookie ? (
+          <Button
+            onClick={sendOrder}
+            htmlType={'button'}
+            type='primary'
+            size='large'
+            disabled={ingredients.length === 0 || !buns ? true : false}
+          >
+            Оформить заказ
+          </Button>
+        ) : (
+          <Link
+            to={'/login'}
+            exact='true'
+          >
+            <Button
+              htmlType={'button'}
+              type='primary'
+              size='large'
+            >
+              Войти
+            </Button>
+          </Link>
+        )}
       </div>
 
       {isModalOpened && (

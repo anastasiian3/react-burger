@@ -1,6 +1,12 @@
 .container {
   display: flex;
-  text-align: center;
+  gap: 60px;
+  margin-top: 12vh;
   justify-content: center;
-  margin-top: 25vh;
 }
+
+/* .order_list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+} */

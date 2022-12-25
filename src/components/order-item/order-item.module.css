@@ -1,0 +1,41 @@
+.item {
+  list-style-type: none;
+  background-color: #1c1c21;
+  border-radius: 40px;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #1c1c21;
+  position: relative;
+}
+
+.item:hover {
+  transform: scale(1.008);
+  border: 1px solid #6d6df0;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .title {
+  max-height: 60px;
+  min-height: 60px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+} */
+
+.status_done {
+  color: #00cccc;
+}
+
+.price {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
