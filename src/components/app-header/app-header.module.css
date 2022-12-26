@@ -2,6 +2,8 @@
   margin: 0 auto;
   max-width: calc(100% - 40px);
   background-color: #1c1c21;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .header__nav {
@@ -17,4 +19,13 @@
   display: flex;
   margin: 0;
   padding: 0;
+}
+
+.logo {
+  opacity: 0.8;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.logo:hover {
+  opacity: 1;
 }

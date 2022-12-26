@@ -5,7 +5,6 @@ import { getOrders } from '../../utils/selectors';
 import styles from './orders-history.module.css';
 
 function OrdersHistory() {
-  // const orders = useSelector((store) => store.wsReducer.orders);
   const orders = useSelector(getOrders);
 
   return (

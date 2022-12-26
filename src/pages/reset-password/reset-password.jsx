@@ -58,6 +58,7 @@ function ResetPassword() {
           <Button
             htmlType={'submit'}
             size={'medium'}
+            disabled={!values.password || !values.token}
           >
             Сохранить
           </Button>

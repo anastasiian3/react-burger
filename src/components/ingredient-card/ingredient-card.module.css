@@ -7,7 +7,7 @@
   transition: all 0.3s ease-in-out;
   border: 1px solid #131316;
   position: relative;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 
 .card:hover {
@@ -40,4 +40,8 @@
   align-items: center;
   margin: 0;
   padding: 0;
+}
+
+.heading {
+  padding-left: 5px;
 }

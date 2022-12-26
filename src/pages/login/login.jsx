@@ -52,7 +52,7 @@ function Login() {
           <Button
             htmlType={'submit'}
             size={'medium'}
-            disabled={!values.email && !values.password}
+            disabled={!values.email || !values.password}
           >
             Войти
           </Button>

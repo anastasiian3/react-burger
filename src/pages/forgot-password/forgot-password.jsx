@@ -42,6 +42,7 @@ function ForgotPassword() {
           <Button
             htmlType={'submit'}
             size={'medium'}
+            disabled={!values.email}
           >
             Восстановить
           </Button>

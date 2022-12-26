@@ -30,7 +30,10 @@ const AppHeader = () => {
             ></HeaderButton>
           </li>
         </ul>
-        <Link to={'/'}>
+        <Link
+          to={'/'}
+          className={styles.logo}
+        >
           <Logo />
         </Link>
         <HeaderButton

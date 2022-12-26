@@ -74,7 +74,7 @@ const IngredientCard = ({ ingredient }) => {
           {ingredient.price}
           {ingredient.price && <CurrencyIcon type={'primary'} />}
         </p>
-        <p className={`text text_type_main-default`}>{ingredient.name}</p>
+        <p className={`text text_type_main-default ${styles.heading}`}>{ingredient.name}</p>
       </Link>
     </article>
   );
