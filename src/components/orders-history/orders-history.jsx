@@ -8,7 +8,7 @@ import styles from './orders-history.module.css';
 function OrdersHistory() {
   const orders = useSelector(getOrders);
 
-  return orders.length === 0 ? (
+  return orders?.length === 0 ? (
     <Loader />
   ) : (
     <ul className={`${styles.order_list}`}>
