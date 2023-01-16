@@ -47,7 +47,6 @@ function OrderInfo({ inModal }) {
     (id) => id !== null && allIngredients.find((ingr) => ingr._id === id)
   );
 
-  console.log(ingredientsInSelectedOrder);
   const totalOrderSum = ingredientsInSelectedOrder?.reduce(
     (total, ingredient) => total + (ingredient.type === INGREDIENTS.BUN ? ingredient.price * 2 : ingredient.price),
     0

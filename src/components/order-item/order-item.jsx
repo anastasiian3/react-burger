@@ -33,6 +33,8 @@ function OrderItem(props) {
 
   const isDone = isOrderDone(status) === 'Выполнен' ? `${styles.status_done}` : ``;
 
+  const arrayWithUniqueIngredients = Array.from(new Set(ingredientsInOrder));
+
   return (
     <li className={`${styles.item} pt-6 pl-6 pr-6`}>
       <Link
@@ -52,7 +54,7 @@ function OrderItem(props) {
         <h3 className={`text text_type_main-medium`}>{name}</h3>
         <p className={`${isDone} text text_type_main-default`}>{isStatusShown}</p>
         <div className={`${styles.info} mt-6 mb-6`}>
-          <OrderIcon ingredients={ingredientsInOrder} />
+          <OrderIcon ingredients={arrayWithUniqueIngredients} />
           <div className={`${styles.price} text text_type_digits-default`}>
             {totalOrderSum} <CurrencyIcon type={'primary'} />
           </div>

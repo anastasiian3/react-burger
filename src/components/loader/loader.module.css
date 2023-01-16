@@ -1,7 +1,16 @@
 .container {
   display: flex;
   justify-content: center;
+}
+
+.container_type_usual {
   margin-top: 35vh;
+}
+
+.container_type_user {
+  margin-top: 10vh;
+  margin-left: 30vh;
+  margin-right: 30vh;
 }
 
 .lds_ellipsis {

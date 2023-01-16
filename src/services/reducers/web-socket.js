@@ -1,4 +1,4 @@
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from '../actions/web-socket';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_ITEMS } from '../actions/web-socket';
 
 const wsInitialState = {
   orders: [],
@@ -23,7 +23,7 @@ export const wsReducer = (state = wsInitialState, action) => {
         wsConnected: false,
       };
     }
-    case WS_GET_MESSAGE: {
+    case WS_GET_ITEMS: {
       return {
         ...state,
         error: undefined,
@@ -38,6 +38,9 @@ export const wsReducer = (state = wsInitialState, action) => {
         ...state,
         error: undefined,
         wsConnected: false,
+        total: null,
+        totalToday: null,
+        orders: [],
       };
     }
     default: {
