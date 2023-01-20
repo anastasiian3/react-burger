@@ -5,19 +5,19 @@ import TotalPrice from '../total-price/total-price';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { INGREDIENTS, loadingSymbol } from '../../utils/const';
-import {
-  ADD_BUN_TO_CART,
-  ADD_INGREDIENT_TO_CART,
-  RESET_CONSTRUCTOR_INGREDIENTS,
-} from '../../services/actions/burger-constructor';
+import { Ingredient, loadingSymbol } from '../../utils/const';
 import { obtainOrderNumber } from '../../services/actions/order-details';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import ConstructorCard from '../constructor-card/constructor-card';
-import { getCookie } from '../../utils/cookies';
+import { getCookie } from '../../utils/cookies.ts';
 import { Link, useHistory } from 'react-router-dom';
 import { getConstructorIngredients } from '../../utils/selectors';
+import {
+  ADD_BUN_TO_CART,
+  ADD_INGREDIENT_TO_CART,
+  RESET_CONSTRUCTOR_INGREDIENTS,
+} from '../../services/actions/constants/burger-constructor';
 
 const BurgerConstructor = () => {
   const cookie = getCookie('accessToken');
@@ -37,7 +37,7 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
     drop(ingredient) {
-      if (ingredient.type === INGREDIENTS.BUN) {
+      if (ingredient.type === Ingredient.Bun) {
         dispatch({ type: ADD_BUN_TO_CART, payload: ingredient });
       } else {
         dispatch({ type: ADD_INGREDIENT_TO_CART, payload: { ...ingredient, key: uuidv4() } });
@@ -113,7 +113,7 @@ const BurgerConstructor = () => {
           )}
           {ingredients.map((ingredient, index) => {
             return (
-              (ingredient.type === 'main' || ingredient.type === 'sauce') && (
+              (ingredient.type === Ingredient.Main || ingredient.type === Ingredient.Sauce) && (
                 <ConstructorCard
                   ingredient={ingredient}
                   index={index}

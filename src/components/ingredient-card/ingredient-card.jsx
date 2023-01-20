@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientsPropTypes } from '../../utils/prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { OPEN_IGREDIENT_MODAL } from '../../services/actions/ingredient-details';
-import { INGREDIENTS } from '../../utils/const';
+import { Ingredient } from '../../utils/const';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import { getConstructorIngredients } from '../../utils/selectors';
+import { OPEN_IGREDIENT_MODAL } from '../../services/actions/constants/ingredient-details';
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
@@ -16,7 +15,7 @@ const IngredientCard = ({ ingredient }) => {
 
   let count = 0;
 
-  if (ingredient.type === INGREDIENTS.BUN) {
+  if (ingredient.type === Ingredient.Bun) {
     if (buns !== null && buns._id === ingredient._id) {
       count = 2;
     }
@@ -78,10 +77,6 @@ const IngredientCard = ({ ingredient }) => {
       </Link>
     </article>
   );
-};
-
-IngredientCard.propTypes = {
-  ingredient: ingredientsPropTypes.isRequired,
 };
 
 export default IngredientCard;

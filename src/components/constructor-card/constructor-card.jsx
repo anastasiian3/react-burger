@@ -1,11 +1,9 @@
 import React, { useRef } from 'react';
 import styles from './constructor-card.module.css';
-import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
-import { DELETE_ITEM, MOVE_ITEM } from '../../services/actions/burger-constructor';
 import { useDrop, useDrag } from 'react-dnd';
-import { ingredientsPropTypes } from '../../utils/prop-types';
+import { DELETE_ITEM, MOVE_ITEM } from '../../services/actions/constants/burger-constructor';
 
 const ConstructorCard = ({ ingredient, index }) => {
   const dispatch = useDispatch();
@@ -92,11 +90,6 @@ const ConstructorCard = ({ ingredient, index }) => {
       />
     </li>
   );
-};
-
-ConstructorCard.propTypes = {
-  ingredient: ingredientsPropTypes.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default ConstructorCard;

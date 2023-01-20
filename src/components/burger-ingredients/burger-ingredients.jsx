@@ -3,10 +3,10 @@ import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import { useInView } from 'react-intersection-observer';
-import { INGREDIENTS } from '../../utils/const';
+import { Ingredient } from '../../utils/const';
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState(INGREDIENTS.BUN);
+  const [current, setCurrent] = useState(Ingredient.Bun);
 
   const options = {
     threshold: 0,
@@ -18,11 +18,11 @@ const BurgerIngredients = () => {
 
   React.useEffect(() => {
     if (inViewBun) {
-      setCurrent(INGREDIENTS.BUN);
+      setCurrent(Ingredient.Bun);
     } else if (inViewSauce) {
-      setCurrent(INGREDIENTS.SAUCE);
+      setCurrent(Ingredient.Sauce);
     } else if (inViewMain) {
-      setCurrent(INGREDIENTS.MAIN);
+      setCurrent(Ingredient.Main);
     }
   }, [inViewBun, inViewMain, inViewSauce]);
 
@@ -39,22 +39,22 @@ const BurgerIngredients = () => {
         className='pb-10'
       >
         <Tab
-          value={INGREDIENTS.BUN}
-          active={current === INGREDIENTS.BUN}
+          value={Ingredient.Bun}
+          active={current === Ingredient.Bun}
           onClick={clickOnIngredientType}
         >
           Булки
         </Tab>
         <Tab
-          value={INGREDIENTS.SAUCE}
-          active={current === INGREDIENTS.SAUCE}
+          value={Ingredient.Sauce}
+          active={current === Ingredient.Sauce}
           onClick={clickOnIngredientType}
         >
           Соусы
         </Tab>
         <Tab
-          value={INGREDIENTS.MAIN}
-          active={current === INGREDIENTS.MAIN}
+          value={Ingredient.Main}
+          active={current === Ingredient.Main}
           onClick={clickOnIngredientType}
         >
           Начинки
@@ -62,21 +62,21 @@ const BurgerIngredients = () => {
       </div>
       <div className={styles.container}>
         <IngredientsCategory
-          id={INGREDIENTS.BUN}
+          id={Ingredient.Bun}
           title={'Булки'}
-          type={INGREDIENTS.BUN}
+          type={Ingredient.Bun}
           ref={bunRef}
         />
         <IngredientsCategory
-          id={INGREDIENTS.SAUCE}
+          id={Ingredient.Sauce}
           title={'Соусы'}
-          type={INGREDIENTS.SAUCE}
+          type={Ingredient.Sauce}
           ref={sauceRef}
         />
         <IngredientsCategory
-          id={INGREDIENTS.MAIN}
+          id={Ingredient.Main}
           title={'Начинки'}
-          type={INGREDIENTS.MAIN}
+          type={Ingredient.Main}
           ref={mainRef}
         />
       </div>

@@ -3,7 +3,7 @@ import styles from './user-menu.module.css';
 
 import { NavLink as Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../services/actions/user-authentication';
+import { logout } from '../../services/actions/user-authentication.ts';
 
 function UserMenu() {
   const dispatch = useDispatch();

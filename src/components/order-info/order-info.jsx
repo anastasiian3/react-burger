@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { closeConnectionWebSocket, startConnectionWebSocket } from '../../services/actions/web-socket';
-import { INGREDIENTS, wsUrl } from '../../utils/const';
-import { getCookie } from '../../utils/cookies';
+import { Ingredient, wsUrl } from '../../utils/const';
+import { getCookie } from '../../utils/cookies.ts';
 import styles from './order-info.module.css';
 import PropTypes from 'prop-types';
 import Loader from '../loader/loader';
@@ -48,7 +48,7 @@ function OrderInfo({ inModal }) {
   );
 
   const totalOrderSum = ingredientsInSelectedOrder?.reduce(
-    (total, ingredient) => total + (ingredient.type === INGREDIENTS.BUN ? ingredient.price * 2 : ingredient.price),
+    (total, ingredient) => total + (ingredient.type === Ingredient.Bun ? ingredient.price * 2 : ingredient.price),
     0
   );
 
