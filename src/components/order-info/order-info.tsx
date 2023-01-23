@@ -45,7 +45,7 @@ function OrderInfo({ inModal }: { inModal: boolean }) {
     }
   };
 
-  const selectedOrderStatus = isOrderDone(selectedOrder.status);
+  const selectedOrderStatus = isOrderDone(selectedOrder?.status);
   const isDone = isOrderDone(selectedOrder?.status) === 'Выполнен' ? `${styles.status__done}` : ``;
 
   const ingredientsInSelectedOrder = useMemo(() => {
@@ -54,7 +54,7 @@ function OrderInfo({ inModal }: { inModal: boolean }) {
         return ingr?._id === id;
       });
     });
-  }, [selectedOrder.ingredients, allIngredients]);
+  }, [selectedOrder?.ingredients, allIngredients]);
 
   const totalOrderSum = useMemo(() => {
     return ingredientsInSelectedOrder?.reduce(
