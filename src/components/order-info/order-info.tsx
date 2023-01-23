@@ -1,27 +1,32 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { closeConnectionWebSocket, startConnectionWebSocket } from '../../services/actions/web-socket';
 import { Ingredient, wsUrl } from '../../utils/const';
-import { getCookie } from '../../utils/cookies.ts';
+import { getCookie } from '../../utils/cookies';
 import styles from './order-info.module.css';
-import PropTypes from 'prop-types';
 import Loader from '../loader/loader';
 import { getAllIngredients, getOrders } from '../../utils/selectors';
+import { useOwnDispatch as useDispatch } from '../../services/types';
+import { IIngredient } from '../../services/types/ingredient';
+import { TUseLocation } from '../../services/types/pages';
 
-function OrderInfo({ inModal }) {
+function OrderInfo({ inModal }: { inModal: boolean }) {
   const orders = useSelector(getOrders);
   const allIngredients = useSelector(getAllIngredients);
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const selectedOrder = orders.find((ingr) => ingr._id === id);
-  const location = useLocation();
+  const { id } = useParams<{ id: string }>();
+  const selectedOrder = orders.find((ingr) => ingr._id === id)!;
+  const location = useLocation<TUseLocation>();
 
   useEffect(() => {
     if (location?.pathname.includes('/profile/orders')) {
-      const accessToken = getCookie('accessToken').split('Bearer ')[1];
-      dispatch(startConnectionWebSocket(`${wsUrl}?token=${accessToken}`));
+      const token = getCookie('accessToken');
+      if (token !== undefined) {
+        const accessToken = token.split('Bearer ')[1];
+        dispatch(startConnectionWebSocket(`${wsUrl}?token=${accessToken}`));
+      }
     } else {
       dispatch(startConnectionWebSocket(`${wsUrl}/all`));
     }
@@ -30,7 +35,7 @@ function OrderInfo({ inModal }) {
     };
   }, [dispatch, location?.pathname]);
 
-  const isOrderDone = (status) => {
+  const isOrderDone = (status: string) => {
     if (status === 'done') {
       return 'Выполнен';
     } else if (status === 'pending') {
@@ -40,22 +45,28 @@ function OrderInfo({ inModal }) {
     }
   };
 
-  const selectedOrderStatus = isOrderDone(selectedOrder?.status);
+  const selectedOrderStatus = isOrderDone(selectedOrder.status);
   const isDone = isOrderDone(selectedOrder?.status) === 'Выполнен' ? `${styles.status__done}` : ``;
 
-  const ingredientsInSelectedOrder = selectedOrder?.ingredients.map(
-    (id) => id !== null && allIngredients.find((ingr) => ingr._id === id)
-  );
+  const ingredientsInSelectedOrder = useMemo(() => {
+    return selectedOrder?.ingredients.map((id) => {
+      return allIngredients?.find((ingr) => {
+        return ingr?._id === id;
+      });
+    });
+  }, [selectedOrder.ingredients, allIngredients]);
 
-  const totalOrderSum = ingredientsInSelectedOrder?.reduce(
-    (total, ingredient) => total + (ingredient.type === Ingredient.Bun ? ingredient.price * 2 : ingredient.price),
-    0
-  );
+  const totalOrderSum = useMemo(() => {
+    return ingredientsInSelectedOrder?.reduce(
+      (total, ingredient) => total + (ingredient?.type === Ingredient.Bun ? ingredient.price * 2 : ingredient!.price),
+      0
+    );
+  }, [ingredientsInSelectedOrder]);
 
-  const getQuantityOfIngredients = (ingredients) => {
+  const getQuantityOfIngredients = (ingredients: IIngredient): number => {
     let count = 0;
-    ingredientsInSelectedOrder.forEach((ingr) => {
-      if (ingr._id === ingredients._id) {
+    ingredientsInSelectedOrder?.forEach((ingr) => {
+      if (ingr?._id === ingredients._id) {
         count++;
       }
     });
@@ -78,22 +89,22 @@ function OrderInfo({ inModal }) {
         {arrayWithUniqueIngredients?.map((item, index) => {
           return (
             <Link
-              to={`/ingredients/${item._id}`}
+              to={`/ingredients/${item?._id}`}
               className={`${styles.link}`}
               key={index}
             >
               <li className={`${styles.item} mb-3 pr-2`}>
                 <div className={`${styles.info__element}`}>
                   <img
-                    src={item.image_mobile}
-                    alt={item.name}
+                    src={item?.image_mobile}
+                    alt={item?.name}
                     className={`${styles.icon}`}
                   />
-                  <span className={`text text_type_main-default`}>{item.name}</span>
+                  <span className={`text text_type_main-default`}>{item?.name}</span>
                 </div>
                 <div className={`text_type_digits-default ${styles.info__element}`}>
                   <p>
-                    {getQuantityOfIngredients(item)} x {item.price}
+                    {getQuantityOfIngredients(item!)} x {item?.price}
                   </p>
                   <CurrencyIcon type={'primary'} />
                 </div>
@@ -115,9 +126,5 @@ function OrderInfo({ inModal }) {
     </section>
   );
 }
-
-OrderInfo.propTypes = {
-  inModal: PropTypes.bool.isRequired,
-};
 
 export default OrderInfo;

@@ -1,14 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useRef, FC } from 'react';
 import styles from './constructor-card.module.css';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
 import { DELETE_ITEM, MOVE_ITEM } from '../../services/actions/constants/burger-constructor';
+import { IIngredient } from '../../services/types/ingredient';
 
-const ConstructorCard = ({ ingredient, index }) => {
+interface IConstructorCard {
+  ingredient: IIngredient;
+  index: number;
+}
+
+interface IDragItem {
+  index: number;
+}
+
+const ConstructorCard: FC<IConstructorCard> = ({ ingredient, index }) => {
   const dispatch = useDispatch();
 
-  const moveCard = (dragIndex, hoverIndex) => {
+  const moveCard = (dragIndex: number, hoverIndex: number) => {
     dispatch({
       type: MOVE_ITEM,
       dragIndex,
@@ -20,7 +30,7 @@ const ConstructorCard = ({ ingredient, index }) => {
     dispatch({ type: DELETE_ITEM, payload: index });
   };
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
   const id = ingredient._id;
 
   const [{ isDragging }, drag] = useDrag({
@@ -34,14 +44,9 @@ const ConstructorCard = ({ ingredient, index }) => {
   });
   const opacity = isDragging ? 0 : 1;
 
-  const [{ handlerId }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: 'constructor-card',
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
-    hover(item, monitor) {
+    hover(item: IDragItem, monitor) {
       if (!ref.current) {
         return;
       }
@@ -54,7 +59,7 @@ const ConstructorCard = ({ ingredient, index }) => {
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -77,7 +82,6 @@ const ConstructorCard = ({ ingredient, index }) => {
       className={styles.ingredient}
       style={{ opacity }}
       ref={ref}
-      data-handler-id={handlerId}
     >
       <DragIcon type={'primary'} />
       <ConstructorElement

@@ -5,11 +5,10 @@ import {
   WS_GET_ITEMS,
 } from '../actions/constants/web-socket';
 import { TWsActions } from '../actions/web-socket';
-import { IIngredient } from '../types/ingredient';
 
 export type TOrder = {
   _id: string;
-  ingredients: Array<IIngredient>;
+  ingredients: Array<string>;
   name: string;
   status: string;
   number: number;
@@ -29,16 +28,12 @@ export type TWsOrdersState = {
   data: TWsItem;
   wsConnected: boolean;
   error: string | undefined;
-  // total: number | null;
-  // totalToday: number | null;
 };
 
 const wsInitialState: TWsOrdersState = {
   data: { success: false, orders: [], total: 0, totalToday: 0 },
   wsConnected: false,
   error: undefined,
-  // total: null,
-  // totalToday: null,
 };
 
 export const wsReducer = (state = wsInitialState, action: TWsActions): TWsOrdersState => {
@@ -68,9 +63,6 @@ export const wsReducer = (state = wsInitialState, action: TWsActions): TWsOrders
           total: action.payload.total,
           totalToday: action.payload.totalToday,
         },
-        // orders: action.payload.orders,
-        // total: action.total,
-        // totalToday: action.totalToday,
       };
     }
     case WS_CONNECTION_CLOSED: {

@@ -25,16 +25,9 @@ const OrderItem: FC<TOrder> = (props) => {
 
   const isStatusShown = location?.pathname.includes('/profile/orders') ? isOrderDone(status) : null;
 
-  //const ingredientsInOrder = ingredients.map((id) => id !== null && allIngredients.find((ingr) => ingr._id === id));
-
-  // const totalOrderSum = ingredientsInOrder.reduce((total, item) => {
-  //   total + (item.type === Ingredient.Bun ? item.price * 2 : item.price), 0;
-  // });
-
   const ingredientsInOrder = useMemo(() => {
     return ingredients?.map((id) => {
       return allIngredients?.find((ingr) => {
-        // @ts-ignore
         return ingr._id === id;
       });
     });

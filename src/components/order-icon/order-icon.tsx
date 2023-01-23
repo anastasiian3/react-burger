@@ -1,11 +1,6 @@
-import React, { FC, ReactNode } from 'react';
+import React from 'react';
 import styles from './order-icon.module.css';
 import { IIngredient } from '../../services/types/ingredient';
-
-interface IOrderIcon {
-  ingredients: Array<IIngredient>;
-  children: ReactNode;
-}
 
 const OrderIcon = ({ ingredients }: any) => {
   return (

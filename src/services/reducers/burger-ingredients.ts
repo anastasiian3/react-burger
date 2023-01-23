@@ -7,7 +7,6 @@ import {
 import { IIngredient } from '../types/ingredient';
 
 export type TIngredientsState = {
-  //ingredients: ReadonlyArray<IIngredient>;
   ingredients: IIngredient[];
   ingredientsRequest: boolean;
   ingredientsError: boolean;

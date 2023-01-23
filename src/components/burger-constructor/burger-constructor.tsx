@@ -4,13 +4,13 @@ import { Button, DragIcon, ConstructorElement } from '@ya.praktikum/react-develo
 import TotalPrice from '../total-price/total-price';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Ingredient, loadingSymbol } from '../../utils/const';
 import { obtainOrderNumber } from '../../services/actions/order-details';
-import { useDrop } from 'react-dnd';
+import { useDrop, DropTargetMonitor } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import ConstructorCard from '../constructor-card/constructor-card';
-import { getCookie } from '../../utils/cookies.ts';
+import { getCookie } from '../../utils/cookies';
 import { Link, useHistory } from 'react-router-dom';
 import { getConstructorIngredients } from '../../utils/selectors';
 import {
@@ -18,6 +18,8 @@ import {
   ADD_INGREDIENT_TO_CART,
   RESET_CONSTRUCTOR_INGREDIENTS,
 } from '../../services/actions/constants/burger-constructor';
+import { IIngredient } from '../../services/types/ingredient';
+import { useOwnDispatch as useDispatch } from '../../services/types';
 
 const BurgerConstructor = () => {
   const cookie = getCookie('accessToken');
@@ -33,10 +35,10 @@ const BurgerConstructor = () => {
 
   const [{ isHover }, dropRef] = useDrop({
     accept: 'ingredients',
-    collect: (monitor) => ({
+    collect: (monitor: DropTargetMonitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(ingredient) {
+    drop(ingredient: IIngredient) {
       if (ingredient.type === Ingredient.Bun) {
         dispatch({ type: ADD_BUN_TO_CART, payload: ingredient });
       } else {
@@ -58,7 +60,7 @@ const BurgerConstructor = () => {
     } else {
       const bunId = buns?._id;
       const ingredientsId = ingredients.map((ingredient) => ingredient._id);
-      const userOrder = [bunId, ...ingredientsId, bunId];
+      const userOrder = [bunId!, ...ingredientsId, bunId!];
       dispatch(obtainOrderNumber(userOrder));
       setIsModalOpened(true);
     }
@@ -80,10 +82,10 @@ const BurgerConstructor = () => {
       >
         {!buns ? (
           <ConstructorElement
+            price={0}
             type={'top'}
             isLocked={true}
             text={'Перетащите булку'}
-            price={''}
             thumbnail={loadingSymbol}
             extraClass={`mr-4`}
           />
@@ -103,11 +105,11 @@ const BurgerConstructor = () => {
             <div className={`${isHover ? styles.container__hover : ''} ${styles.container_type_empty}`}>
               <DragIcon type={'primary'} />
               <ConstructorElement
+                price={0}
                 isLocked={false}
                 text={`Перетащите начинку`}
-                price={''}
                 thumbnail={loadingSymbol}
-                extraClass={`mr-4 ml-1`}
+                extraClass={`mr-3 ml-1`}
               />
             </div>
           )}
@@ -127,8 +129,8 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type={'bottom'}
             isLocked={true}
+            price={0}
             text={`Перетащите булку`}
-            price={''}
             thumbnail={loadingSymbol}
             extraClass={`mr-4`}
           />
@@ -156,10 +158,7 @@ const BurgerConstructor = () => {
             Оформить заказ
           </Button>
         ) : (
-          <Link
-            to={'/login'}
-            exact='true'
-          >
+          <Link to={'/login'}>
             <Button
               htmlType={'button'}
               type='primary'
@@ -176,7 +175,7 @@ const BurgerConstructor = () => {
           onOverlayClick={closeAllModals}
           closeAllModals={closeAllModals}
         >
-          <OrderDetails closeModal={closeAllModals} />
+          <OrderDetails />
         </Modal>
       )}
     </div>

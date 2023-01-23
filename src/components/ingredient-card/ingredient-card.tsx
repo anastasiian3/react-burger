@@ -8,8 +8,9 @@ import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import { getConstructorIngredients } from '../../utils/selectors';
 import { OPEN_IGREDIENT_MODAL } from '../../services/actions/constants/ingredient-details';
+import { IIngredient } from '../../services/types/ingredient';
 
-const IngredientCard = ({ ingredient }) => {
+const IngredientCard = ({ ingredient }: { ingredient: IIngredient }) => {
   const dispatch = useDispatch();
   const { buns, ingredients } = useSelector(getConstructorIngredients);
 
@@ -35,7 +36,7 @@ const IngredientCard = ({ ingredient }) => {
     }),
   });
 
-  const [ingredientsModal, setIngredientsModal] = useState(null);
+  const [ingredientsModal, setIngredientsModal] = useState<IIngredient | null>(null);
 
   const openIgredientModal = () => {
     setIngredientsModal(ingredient);
@@ -60,7 +61,6 @@ const IngredientCard = ({ ingredient }) => {
           <Counter
             count={count}
             size='default'
-            className={`text text_type_digits-default`}
           />
         )}
         <img

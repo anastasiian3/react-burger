@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { Ingredient } from '../../utils/const';
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState(Ingredient.Bun);
+  const [current, setCurrent] = useState<string>(Ingredient.Bun);
 
   const options = {
     threshold: 0,
@@ -26,7 +26,7 @@ const BurgerIngredients = () => {
     }
   }, [inViewBun, inViewMain, inViewSauce]);
 
-  const clickOnIngredientType = (id) => {
+  const clickOnIngredientType = (id: string) => {
     setCurrent(id);
     document.querySelector(`#${id}`)?.scrollIntoView({ behavior: 'smooth' });
   };

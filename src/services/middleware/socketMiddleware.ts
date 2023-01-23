@@ -1,6 +1,6 @@
 import { Middleware } from 'redux';
 import { getCookie } from '../../utils/cookies';
-import { startConnectionWebSocket } from '../actions/web-socket';
+import { WS_CONNECTION_START } from '../actions/constants/web-socket';
 import { RootState } from '../types';
 import { TWebSocketActions } from '../types/web-socket';
 
@@ -47,7 +47,10 @@ export const socketMiddleware = (wsActions: TWebSocketActions): Middleware<{}, R
                   url = url.replace(/\?token=.*/, `orders?token=${accessToken}`);
                 }
               }
-              dispatch(startConnectionWebSocket(url));
+              dispatch({
+                type: WS_CONNECTION_START,
+                payload: url,
+              });
             }, 3000);
           }
         };

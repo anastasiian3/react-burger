@@ -1,13 +1,18 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, ForwardedRef, FC } from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import itemsStyles from './ingredients-category.module.css';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getAllIngredients } from '../../utils/selectors';
 
-const IngredientsCategory = forwardRef(({ title, id, type }, ref) => {
-  const items = useSelector(getAllIngredients);
+interface IIngredientsCategory {
+  title: string;
+  id: string;
+  type: string;
+  ref?: ForwardedRef<HTMLUListElement>;
+}
 
+const IngredientsCategory: FC<IIngredientsCategory> = forwardRef(({ title, id, type }, ref) => {
+  const items = useSelector(getAllIngredients);
   return (
     <section>
       <h3
@@ -24,10 +29,7 @@ const IngredientsCategory = forwardRef(({ title, id, type }, ref) => {
           return (
             item.type === type && (
               <li key={item._id}>
-                <IngredientCard
-                  ingredient={item}
-                  count={item.__v}
-                />
+                <IngredientCard ingredient={item} />
               </li>
             )
           );
@@ -36,11 +38,5 @@ const IngredientsCategory = forwardRef(({ title, id, type }, ref) => {
     </section>
   );
 });
-
-IngredientsCategory.propTypes = {
-  title: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-};
 
 export default IngredientsCategory;

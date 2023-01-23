@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useOwnSelector as useSelector } from '../../services/types';
 import styles from './orders-status.module.css';
 
 function OrdersStatus() {

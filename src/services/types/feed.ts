@@ -1,6 +1,5 @@
 export type TFeed = {
   createdAt: Date;
-  //ingredients: Array<string>;
   ingredients: string[];
   name: string;
   number: number;

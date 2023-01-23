@@ -10,6 +10,4 @@ export type TUseLocation = {
   hash: string;
   state: null;
   from?: string;
-  //from: string;
-  //state?: object;
 };
