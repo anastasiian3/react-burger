@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { Ingredient } from '../../utils/const';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import { getConstructorIngredients } from '../../utils/selectors';
 import { OPEN_IGREDIENT_MODAL } from '../../services/actions/constants/ingredient-details';
 import { IIngredient } from '../../services/types/ingredient';
+import { useOwnDispatch as useDispatch, useOwnSelector as useSelector } from '../../services/types';
 
 const IngredientCard = ({ ingredient }: { ingredient: IIngredient }) => {
   const dispatch = useDispatch();

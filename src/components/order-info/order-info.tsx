@@ -1,6 +1,5 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { closeConnectionWebSocket, startConnectionWebSocket } from '../../services/actions/web-socket';
 import { Ingredient, wsUrl } from '../../utils/const';
@@ -8,7 +7,7 @@ import { getCookie } from '../../utils/cookies';
 import styles from './order-info.module.css';
 import Loader from '../loader/loader';
 import { getAllIngredients, getOrders } from '../../utils/selectors';
-import { useOwnDispatch as useDispatch } from '../../services/types';
+import { useOwnDispatch as useDispatch, useOwnSelector as useSelector } from '../../services/types';
 import { IIngredient } from '../../services/types/ingredient';
 import { TUseLocation } from '../../services/types/pages';
 

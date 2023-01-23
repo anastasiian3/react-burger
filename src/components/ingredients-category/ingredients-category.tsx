@@ -1,8 +1,8 @@
 import React, { forwardRef, ForwardedRef, FC } from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import itemsStyles from './ingredients-category.module.css';
-import { useSelector } from 'react-redux';
 import { getAllIngredients } from '../../utils/selectors';
+import { useOwnSelector as useSelector } from '../../services/types';
 
 interface IIngredientsCategory {
   title: string;

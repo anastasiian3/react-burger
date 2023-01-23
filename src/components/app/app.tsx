@@ -1,6 +1,4 @@
 import React, { useEffect, FC } from 'react';
-//import { useDispatch, useSelector } from 'react-redux';
-
 import AppHeader from '../app-header/app-header';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import HomePage from '../../pages/home-page/home-page';

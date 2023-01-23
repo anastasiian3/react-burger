@@ -1,8 +1,8 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { TOrder } from '../../services/reducers/web-socket';
+import { useOwnSelector as useSelector } from '../../services/types';
 import { Ingredient } from '../../utils/const';
 import { getAllIngredients } from '../../utils/selectors';
 import OrderIcon from '../order-icon/order-icon';

@@ -3,8 +3,8 @@ import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderButton from '../header-button/header-button';
 import { NavLink as Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { getUserName, isUserAuth } from '../../utils/selectors';
+import { useOwnSelector as useSelector } from '../../services/types';
 
 const AppHeader = () => {
   const isAuth = useSelector(isUserAuth);

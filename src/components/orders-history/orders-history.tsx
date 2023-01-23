@@ -1,9 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import OrderItem from '../order-item/order-item';
 import { getOrders } from '../../utils/selectors';
 import Loader from '../loader/loader';
 import styles from './orders-history.module.css';
+import { useOwnSelector as useSelector } from '../../services/types';
 
 function OrdersHistory() {
   const orders = useSelector(getOrders);

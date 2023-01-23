@@ -4,7 +4,6 @@ import { Button, DragIcon, ConstructorElement } from '@ya.praktikum/react-develo
 import TotalPrice from '../total-price/total-price';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useSelector } from 'react-redux';
 import { Ingredient, loadingSymbol } from '../../utils/const';
 import { obtainOrderNumber } from '../../services/actions/order-details';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
@@ -19,7 +18,7 @@ import {
   RESET_CONSTRUCTOR_INGREDIENTS,
 } from '../../services/actions/constants/burger-constructor';
 import { IIngredient } from '../../services/types/ingredient';
-import { useOwnDispatch as useDispatch } from '../../services/types';
+import { useOwnDispatch as useDispatch, useOwnSelector as useSelector } from '../../services/types';
 
 const BurgerConstructor = () => {
   const cookie = getCookie('accessToken');

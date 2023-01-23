@@ -1,10 +1,9 @@
 import React, { useEffect, FC } from 'react';
-import { useSelector } from 'react-redux';
 import Loader from '../../components/loader/loader';
 import OrderItem from '../../components/order-item/order-item';
 import OrdersStatus from '../../components/orders-status/orders-status';
 import { closeConnectionWebSocket, startConnectionWebSocket } from '../../services/actions/web-socket';
-import { useOwnDispatch as useDispatch } from '../../services/types';
+import { useOwnDispatch as useDispatch, useOwnSelector as useSelector } from '../../services/types';
 import { wsUrl } from '../../utils/const';
 import { getOrders } from '../../utils/selectors';
 import styles from './feed.module.css';

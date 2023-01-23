@@ -1,10 +1,10 @@
 import React, { useRef, FC } from 'react';
 import styles from './constructor-card.module.css';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
 import { DELETE_ITEM, MOVE_ITEM } from '../../services/actions/constants/burger-constructor';
 import { IIngredient } from '../../services/types/ingredient';
+import { useOwnDispatch as useDispatch } from '../../services/types';
 
 interface IConstructorCard {
   ingredient: IIngredient;
