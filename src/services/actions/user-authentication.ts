@@ -277,8 +277,9 @@ export const getUser = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const checkAuth = () => (dispatch: any) => {
+export const checkAuth = () => (dispatch: AppDispatch) => {
   if (getCookie('accessToken')) {
+    // @ts-ignore
     dispatch(getUser()).finally(() => {
       dispatch({ type: AUTH_CHECKED });
     });

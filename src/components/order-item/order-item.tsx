@@ -3,6 +3,7 @@ import React, { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { TOrder } from '../../services/reducers/web-socket';
 import { useOwnSelector as useSelector } from '../../services/types';
+import { IIngredient } from '../../services/types/ingredient';
 import { Ingredient } from '../../utils/const';
 import { getAllIngredients } from '../../utils/selectors';
 import OrderIcon from '../order-icon/order-icon';
@@ -44,7 +45,7 @@ const OrderItem: FC<TOrder> = (props) => {
 
   const isDone = isOrderDone(status) === 'Выполнен' ? `${styles.status_done}` : ``;
 
-  const arrayWithUniqueIngredients = Array.from(new Set(ingredientsInOrder));
+  const arrayWithUniqueIngredients = Array.from(new Set(ingredientsInOrder as Array<IIngredient>));
 
   return (
     <li className={`${styles.item} pt-6 pl-6 pr-6`}>

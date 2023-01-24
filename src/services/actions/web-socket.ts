@@ -50,8 +50,8 @@ export const startConnectionWebSocket = (url: string) => (dispatch: AppDispatch)
   });
 };
 
-export const closeConnectionWebSocket = () => (dispatch: AppDispatch) => {
-  dispatch({
+export const closeConnectionWebSocket = () => () => {
+  return {
     type: WS_CONNECTION_CLOSED,
-  });
+  };
 };

@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './order-icon.module.css';
 import { IIngredient } from '../../services/types/ingredient';
 
-const OrderIcon = ({ ingredients }: any) => {
+const OrderIcon = ({ ingredients }: { ingredients: IIngredient[] }) => {
   return (
     <ul className={styles.list}>
-      {ingredients?.slice(0, 6).map((item: IIngredient, index: number) => {
+      {ingredients?.slice(0, 6).map((item, index) => {
         if (index < 5) {
           return (
             <li

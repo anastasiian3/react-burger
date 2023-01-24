@@ -16,7 +16,7 @@ function OrderInfo({ inModal }: { inModal: boolean }) {
   const allIngredients = useSelector(getAllIngredients);
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
-  const selectedOrder = orders.find((ingr) => ingr._id === id)!;
+  const selectedOrder = orders?.find((ingr) => ingr._id === id)!;
   const location = useLocation<TUseLocation>();
 
   useEffect(() => {

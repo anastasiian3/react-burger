@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent } from 'react';
+import React, { FC, FormEvent } from 'react';
 import styles from '../forms.module.css';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
@@ -20,7 +20,7 @@ const ResetPassword: FC = () => {
     token: '',
   });
 
-  const handleResetPassword = (event: SyntheticEvent) => {
+  const handleResetPassword = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (values.password && values.token) {

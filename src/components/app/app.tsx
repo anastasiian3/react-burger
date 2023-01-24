@@ -53,24 +53,27 @@ const App: FC = () => {
           >
             <HomePage />
           </Route>
-          <Route
+          <ProtectedRoute
             path={'/login'}
             exact
+            onlyForAuth={false}
           >
             <Login />
-          </Route>
-          <Route
+          </ProtectedRoute>
+          <ProtectedRoute
             path={'/register'}
             exact
+            onlyForAuth={false}
           >
             <Register />
-          </Route>
-          <Route
+          </ProtectedRoute>
+          <ProtectedRoute
             path={'/forgot-password'}
             exact
+            onlyForAuth={false}
           >
             <ForgotPassword />
-          </Route>
+          </ProtectedRoute>
           <Route
             path={'/reset-password'}
             exact
@@ -91,18 +94,21 @@ const App: FC = () => {
           </Route>
           <ProtectedRoute
             path={'/profile'}
+            onlyForAuth
             exact
           >
             <Profile />
           </ProtectedRoute>
           <ProtectedRoute
             path={'/profile/orders'}
+            onlyForAuth
             exact
           >
             <OrdersPage />
           </ProtectedRoute>
           <ProtectedRoute
             exact
+            onlyForAuth
             path={'/profile/orders/:id'}
           >
             <OrderInfo inModal={false} />
@@ -142,6 +148,7 @@ const App: FC = () => {
           </Route>
           <ProtectedRoute
             exact
+            onlyForAuth
             path={'/profile/orders/:id'}
           >
             <Modal

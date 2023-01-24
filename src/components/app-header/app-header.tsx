@@ -16,7 +16,6 @@ const AppHeader = () => {
       <nav className={`${styles.header__nav} pt-4 pb-4`}>
         <ul className={`${styles.header__list}`}>
           <li className={`${styles.header__item}`}>
-            {/* <BurgerIcon type={location.pathname === '/' ? 'primary' : 'secondary'} /> */}
             <HeaderButton
               text={'Конструктор'}
               to={'/'}

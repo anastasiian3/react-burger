@@ -1,9 +1,8 @@
-import React, { SyntheticEvent } from 'react';
+import React, { FormEvent } from 'react';
 import styles from '../forms.module.css';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { forgotPassword } from '../../services/actions/user-authentication';
-import { getCookie } from '../../utils/cookies';
 import { useForm } from '../../hooks/use-form';
 import { useOwnDispatch as useDispatch } from '../../services/types';
 
@@ -14,7 +13,7 @@ function ForgotPassword() {
     email: '',
   });
 
-  const handleSubmitEmailInfo = (event: SyntheticEvent) => {
+  const handleSubmitEmailInfo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(forgotPassword(values.email));
     history.replace({
@@ -22,10 +21,7 @@ function ForgotPassword() {
       state: 'reset-password',
     });
   };
-  const cookie = getCookie('accessToken');
-  if (cookie) {
-    return <Redirect to={'/'} />;
-  }
+
   return (
     <div className={`${styles.container}`}>
       <form onSubmit={handleSubmitEmailInfo}>

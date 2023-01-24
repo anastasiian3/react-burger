@@ -1,9 +1,8 @@
-import React, { SyntheticEvent } from 'react';
+import React, { FormEvent } from 'react';
 import styles from '../forms.module.css';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { authorizeUser } from '../../services/actions/user-authentication';
-import { getCookie } from '../../utils/cookies';
 import { useForm } from '../../hooks/use-form';
 import { TUseLocation } from '../../services/types/pages';
 import { useOwnDispatch as useDispatch } from '../../services/types';
@@ -13,23 +12,17 @@ function Login() {
   const history = useHistory();
   const location = useLocation<TUseLocation>();
 
-  const cookie = getCookie('accessToken');
-
   const { values, handleChange } = useForm({
     email: '',
     password: '',
   });
 
-  const handleSubmitUserInfo = (event: SyntheticEvent) => {
+  const handleSubmitUserInfo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(authorizeUser(values)).then(() => {
       history.push(location.state?.from || '/');
     });
   };
-
-  if (cookie) {
-    return <Redirect to={location.state?.from || '/'} />;
-  }
 
   return (
     <div className={`${styles.container}`}>

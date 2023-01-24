@@ -1,15 +1,14 @@
-import React, { SyntheticEvent } from 'react';
+import React, { FormEvent } from 'react';
 import styles from '../forms.module.css';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { userRegister } from '../../services/actions/user-authentication';
-import { getCookie } from '../../utils/cookies';
 import { useForm } from '../../hooks/use-form';
 import { useOwnDispatch as useDispatch } from '../../services/types';
 
 function Register() {
   const dispatch = useDispatch();
-  const cookie = getCookie('accessToken');
+
   const history = useHistory();
 
   const { values, handleChange } = useForm({
@@ -18,7 +17,7 @@ function Register() {
     name: '',
   });
 
-  const handleSubmitInfo = (event: SyntheticEvent) => {
+  const handleSubmitInfo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(userRegister(values));
     history.replace({
@@ -26,9 +25,6 @@ function Register() {
     });
   };
 
-  if (cookie) {
-    return <Redirect to={'/'} />;
-  }
   return (
     <div className={`${styles.container}`}>
       <form onSubmit={handleSubmitInfo}>
