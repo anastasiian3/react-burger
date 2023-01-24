@@ -8,7 +8,7 @@ import {
   sendResetPasswordRequest,
 } from '../../utils/api';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookies';
-import { AppDispatch } from '../types';
+import { AppDispatch, AppThunk } from '../types';
 import { IChangeInfo, ILogin, INewPasswordRequest, IRegister, IUser } from '../types/auth';
 import {
   AUTH_CHECKED,
@@ -277,9 +277,8 @@ export const getUser = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const checkAuth = () => (dispatch: AppDispatch) => {
+export const checkAuth = (): AppThunk => (dispatch) => {
   if (getCookie('accessToken')) {
-    // @ts-ignore
     dispatch(getUser()).finally(() => {
       dispatch({ type: AUTH_CHECKED });
     });

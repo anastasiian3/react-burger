@@ -19,9 +19,11 @@ type TApplicationActions =
   | TWsActions;
 
 export type RootState = ReturnType<typeof rootReducers>;
-export type AppThunk<ReturnType = void> = ActionCreator<ThunkAction<ReturnType, Action, RootState, TApplicationActions>>;
+//export type AppThunk<ReturnType = void> = ActionCreator<ThunkAction<ReturnType, Action, RootState, TApplicationActions>>;
 export type TypedDispatch = ThunkDispatch<RootState, any, AnyAction>;
 
 export const useOwnDispatch = () => useDispatch<TypedDispatch>();
 export const useOwnSelector: TypedUseSelectorHook<RootState> = useSelector;
 export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
