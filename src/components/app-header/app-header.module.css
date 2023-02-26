@@ -21,6 +21,31 @@
   padding: 0;
 }
 
+.header__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.header__item::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #6d6df0;
+  transform-origin: bottom right;
+  transition: transform 0.4s ease-in-out;
+}
+
+.header__item:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
 .logo {
   opacity: 0.8;
   transition: opacity 0.3s ease-in-out;
