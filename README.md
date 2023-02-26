@@ -1,4 +1,4 @@
-# Проект Stellar Burger — Космическая Бургерная
+# Проект Космическая Бургерная
 
 ![Logo Burger](./src/images/burgers.png)
 
